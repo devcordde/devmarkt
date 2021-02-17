@@ -1,0 +1,14 @@
+.env
+.env.dev
+discordguild.php
+f.php
+test.php
+phptags
+docker-compose.debug.yaml
+assets/css/style_new.css
+.idea/
+assets/css/style_bonk.css
+push.sh
+assets/img/yeet.jpg
+debug.sh
+lol.txt

@@ -1,0 +1,412 @@
+@font-face {
+    font-family: 'Raleway-Black';
+    src: url('../fonts/Raleway-Black.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/Roboto-Light.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.unprocessed {
+
+    text-transform: uppercase;
+    color: white;
+    background-color: gray;
+    padding: 10px 10px;
+
+}
+
+footer {
+
+    position: fixed;
+    bottom: 0;
+
+}
+
+.angenommen {
+
+    text-transform: uppercase;
+    color: white;
+    background-color: green;
+    padding: 10px 10px;
+
+}
+
+.error {
+
+    border: 3px solid red;
+    padding: 10px 10px;
+
+}
+
+.abgelehnt {
+
+    text-transform: uppercase;
+    color: white;
+    background-color: darkred;
+    padding: 10px 10px;
+
+}
+
+.dettitle {
+
+    text-decoration: underline;
+
+}
+
+* {
+
+    margin: 0;
+    font-family: 'Raleway-Black',sans-serif;
+
+}
+
+p {
+
+    color: rgba(0,0,0,0.6);
+
+}
+
+p b {
+
+    color: rgba(0,0,0,0.7);
+
+}
+
+#s { display: flex; height: 100%; }
+
+.success {
+
+    font-size: 100%;
+    width: 100%;
+    margin-top: 100%;
+
+}
+
+@media screen and (min-width: 1000px) {
+
+    .form {
+
+        padding: 20px 20px;
+        background-color: rgba(255,255,255,0.5);
+        height: 80%;
+        width: 60%;
+        margin: auto;
+        margin-top: 5%;
+
+    }
+
+    form {
+
+        text-align: left;
+        padding-left: 10%;
+
+    }
+
+    input[type='color'] {
+
+        margin: 0;
+        border: none;
+        padding-top: 25px;
+        padding-bottom: 25px;
+        border-right: rgba(0,0,0,0.5) solid;
+
+    }
+
+
+    input[type='color']::-webkit-color-swatch {
+
+        border: none;
+
+    }
+
+    input[type='color']::-moz-color-swatch {
+        border:none;
+    }
+
+    input[type='text'],[type='url'] {
+
+        padding: 10px 10px 10px 10px;
+        border: none;
+        width: 80%;
+        font-family: 'Raleway-Black',sans-serif;
+        color: rgba(0,0,0,0.6);
+        font-size: 120%;
+
+    }
+
+    select {
+
+        width: 76%;
+        border: none;
+        background: no-repeat right white;
+        padding: 10px 30px 10px 30px;
+        font-family: 'Raleway-Black', sans-serif;
+        color: rgba(0,0,0,0.5);
+        font-size: 110%;
+
+    }
+
+    textarea {
+
+        width: 80%;
+        border: none;
+        resize:none;
+        height: 200px;
+        padding: 10px 10px;
+        font-family: 'Raleway-Black', sans-serif;
+        color: rgba(0,0,0,0.5);
+        transition: ease-in-out 200ms;
+
+    }
+
+    input::placeholder {
+
+        font-family: 'Raleway-Black',sans-serif;
+        padding: 25px 30px 25px 30px;
+        color: rgba(0,0,0,0.7);
+        text-align: left;
+        font-size: 110%;
+
+    }
+
+    body {
+
+        background: url("../img/trianglify.svg") no-repeat fixed center;
+        font-family: 'Roboto', sans-serif;
+
+
+    }
+
+    .send {
+
+        width: 40%;
+        padding: 20px 20px;
+        background-color: rgba(255,255,255,0.8);
+        border:none;
+        cursor: pointer;
+        bottom: 20%;
+        background: #0F2027;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #2C5364, #203A43, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        color: white;
+        font-size: 120%;
+        font-family: 'Raleway-Black', sans-serif;
+        transition: ease-in-out 500ms;
+        font-weight: bold;
+        text-transform: uppercase;
+
+
+    }
+
+    h3 {
+
+        font-family: 'Raleway-Black', sans-serif;
+        color: rgba(0,0,0,0.7);
+        font-size: 400%;
+        text-transform: uppercase;
+        text-align: center;
+        margin-top: 7%;
+
+    }
+
+    .dv {
+
+        font-size: 200%;
+        margin-left: unset;
+        text-align: left;
+
+    }
+
+    .form a button {
+
+        margin-top: 10%;
+        width: 40%;
+        padding: 20px 20px;
+        background-color: rgba(255,255,255,0.8);
+        margin-left: 30%;
+        border:none;
+        cursor: pointer;
+        bottom: 20%;
+        background: #0F2027;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #2C5364, #203A43, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        color: white;
+        font-size: 120%;
+        font-family: 'Raleway-Black', sans-serif;
+        transition: ease-in-out 500ms;
+        font-weight: bold;
+        text-transform: uppercase;
+
+    }
+
+    .form a button:hover {
+
+        background: #0F2027;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #2C5364, #203A43, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        color: gray;
+        transition: ease-in-out 500ms;
+
+    }
+
+}
+
+@media screen and (max-width: 1000px) {
+
+    h3 {
+
+        font-family: 'Raleway-Black', sans-serif;
+        color: rgba(0,0,0,0.8);
+        padding: 5% 5%;
+        text-align: center;
+        font-size: 500%;
+        text-transform: uppercase;
+
+    }
+
+    .form {
+
+        background-color: rgba(255,255,255,0.8);
+        height: 80%;
+        width: 90%;
+        margin-left: 5%;
+        margin-top: 5%;
+
+    }
+
+    .form a button {
+
+        text-align: center;
+        width: 60%;
+        padding: 5% 20%;
+        background-color: rgba(255,255,255,0.8);
+        border:none;
+        cursor: pointer;
+        background: #0F2027;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #2C5364, #203A43, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        color: white;
+        font-size: 350%;
+        font-family: 'Raleway-Black', sans-serif;
+        transition: ease-in-out 500ms;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin-left: 20%;
+        margin-bottom: 10%;
+
+    }
+
+    .form a button:hover {
+
+        background: #0F2027;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #2C5364, #203A43, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        color: gray;
+        transition: ease-in-out 500ms;
+
+    }
+
+    .form a {
+
+        text-align: center;
+        color: green;
+
+    }
+
+    body {
+
+        background: url("../img/trianglify.svg") no-repeat fixed center;
+
+    }
+
+    form {
+
+        text-align: left;
+        padding-left: 10%;
+
+    }
+
+    input[type='text'],[type='url'] {
+
+        padding: 30px 10px 30px 10px;
+        border: none;
+        width: 80%;
+        font-family: 'Raleway-Black',sans-serif;
+        color: rgba(0,0,0,0.6);
+        font-size: 220%;
+
+    }
+
+    select {
+
+        width: 80%;
+        border: none;
+        background: no-repeat right white;
+        padding: 10px 30px 10px 30px;
+        font-family: 'Raleway-Black', sans-serif;
+        color: rgba(0,0,0,0.5);
+        font-size: 210%;
+
+    }
+
+    textarea {
+
+        width: 80%;
+        border: none;
+        resize:none;
+        height: 200px;
+        font-size: 220%;
+        padding: 10px 10px;
+        font-family: 'Raleway-Black', sans-serif;
+
+    }
+
+    input::placeholder {
+
+        font-family: 'Raleway-Black',sans-serif;
+        padding: 25px 30px 25px 30px;
+        color: rgba(0,0,0,0.7);
+        text-align: left;
+        font-size: 110%;
+
+    }
+
+    .dv {
+
+        font-size: 500%;
+        margin-left: unset;
+        text-align: left;
+
+    }
+
+
+    .send {
+
+        width: 80%;
+        padding: 20px 40px;
+        background-color: rgba(255,255,255,0.8);
+        border:none;
+        cursor: pointer;
+        bottom: 20%;
+        background: #0F2027;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #2C5364, #203A43, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        color: white;
+        font-size: 220%;
+        font-family: 'Raleway-Black', sans-serif;
+        transition: ease-in-out 500ms;
+        font-weight: bold;
+        text-transform: uppercase;
+        text-align: center;
+
+
+    }
+
+
+}
