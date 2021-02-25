@@ -74,7 +74,7 @@ class DevmarktRequest
             echo 'Nutzer nimmt keine DM-Nachrichten an. <a href="' . $this->caseUrl . '">Case</a>';
             $acceptsDMs = false;
         }
-        $devmarktRequestEmbed = $this->generateDevmarktProcessedEmbed(true, $login, $acceptsDMs);
+        $devmarktRequestEmbed = $this->generateProcessedEmbed(true, $login, $acceptsDMs);
         $messageContent = '<@' . $applicant->getDiscordId() . '>';
 
         if ($applicant->isModerator()) {
@@ -191,7 +191,7 @@ class DevmarktRequest
         return hexdec($color);
     }
 
-    function generateDevmarktProcessedEmbed($accepted, $login, $acceptsDMs): array
+    function generateProcessedEmbed($accepted, $login, $acceptsDMs): array
     {
 
         $title = ($accepted ? 'Devmarkt-Anfrage angenommen' : 'Devmarkt-Anfrage abgelehnt');
@@ -424,7 +424,7 @@ class DevmarktRequest
             $acceptsDMs = false;
         }
 
-        $devmarktRequestEmbed = $this->generateDevmarktProcessedEmbed(false, $login, $acceptsDMs);
+        $devmarktRequestEmbed = $this->generateProcessedEmbed(false, $login, $acceptsDMs);
         sendMessage(getenv("GUILD_DEVMARKT_REQUEST_CHANNEL"), null, $devmarktRequestEmbed, false);
         header('Location: ' . $this->caseUrl);
         return true;
