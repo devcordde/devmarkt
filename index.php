@@ -71,7 +71,7 @@ $discordInvite = "https://discord.gg/PZaG3FS";
 
          $request = new DevmarktRequest($login->getLastAcceptedEntry()[0]);
          $datum = date("d.m.y", $request->getProcessedDate());
-         $cooldowndate = $request->getProcessedDate() + 60 * 60 * 24 * 30;
+         $cooldowndate = $request->getProcessedDate() + 86400 * 30;
          $cdd = date("d.m.y", $cooldowndate);
 
          ?>
@@ -154,7 +154,7 @@ $discordInvite = "https://discord.gg/PZaG3FS";
 </div>
 
 <footer>
-<p>&copy;T1Il 20<?php echo date('y'); ?> (v1.2)</p>
+    <p><a href="https://github.com/T1Il/devcord_devmarkt/">T1Il</a> 20<?php echo date('y'); ?> (v1.2)</p>
 <br>
 <a href="impressum.html">Impressum/Datenschutzerklärung</a>
 </footer>
