@@ -34,7 +34,7 @@ class DevmarktRequest
         $this->pdo = $this->mysql->getPDO();
         $this->initializeRequest();
 
-        $this->caseUrl = getenv('BOT_BASE_URI') . '/case.php?req_id=' . testInput($this->req_id);
+        $this->caseUrl = getenv('BOT_BASE_URI') . '/case.php?req_id=' . $this->testInput($this->req_id);
         
     }
 
