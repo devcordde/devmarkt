@@ -72,7 +72,7 @@ $discordInvite = "https://discord.gg/PZaG3FS";
          $request = new DevmarktRequest($login->getLastAcceptedEntry()[0]);
          $datum = date("d.m.y", $request->getProcessedDate());
          $cooldowndate = $request->getProcessedDate() + 86400 * 30;
-         $cdd = date("d.m.y", $cooldowndate);
+         $cdd = date("d.m.y - H:i", $cooldowndate);
 
          ?>
 
