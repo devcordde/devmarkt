@@ -128,7 +128,7 @@ $discordInvite = "https://discord.gg/PZaG3FS";
         <br>
         <br>
 
-        <input type="url" name="additional_link" placeholder="Link mit weiteren Informationen">
+        <input oninput="checkAdditionalURL()" id="additional_url" type="url" name="additional_link" placeholder="Link mit weiteren Informationen">
         <br><br>
 
         <?php
