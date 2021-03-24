@@ -1,7 +1,6 @@
 function checkInput(base_uri) {
 
     var desc = document.getElementById('desc');
-    var xhttp = new XMLHttpRequest();
 
     $.post(base_uri,{text:desc.value}, function(data,status) {
 
@@ -14,6 +13,16 @@ function checkInput(base_uri) {
         } else return true;
 
     });
+
+}
+
+function checkAdditionalURL() {
+    
+    var link = document.getElementById('additional_url');
+
+    if (link.value.toLowerCase().includes("discord")) {
+        alert('Keine Discord-Einladungen!');
+    }
 
 }
 
