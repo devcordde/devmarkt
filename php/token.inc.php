@@ -1,5 +1,6 @@
 <?php
 include_once('pdo.php');
+include_once('login.inc.php');
 
 class UserTokenHandler
 {
@@ -41,6 +42,10 @@ class UserTokenHandler
         $this->exists = true;
 
 
+    }
+
+    public function getUser() : ?User {
+        return ($this->exists) ? new User($this->getDiscordID()) : null;
     }
 
     public function getDiscordID()

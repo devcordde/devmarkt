@@ -8,7 +8,7 @@ try {
 $provider = new \Wohali\OAuth2\Client\Provider\Discord([
     'clientId' => getenv("BOT_CLIENT_ID"),
     'clientSecret' => getenv("BOT_CLIENT_SECRET"),
-    'redirectUri' => $redirect_uri,
+    'redirectUri' => getenv("BOT_REDIRECT_URI"),
 ]);
 
 $options = [
@@ -46,7 +46,6 @@ if (!isset($_GET['code'])) {
     exit('Invalid state');
 
 } else {
-
 
     try {
 
@@ -88,6 +87,7 @@ if (!isset($_GET['code'])) {
         }
 
     } catch (Exception $e) {
+        echo $e->getMessage();
         header('Location: login.php');
     }
 
