@@ -26,6 +26,9 @@ class DevmarktRequest
 
     public string $caseUrl;
 
+    public string $checkEmote;
+    public string $blockEmote;
+
     public function __construct($req_id)
     {
 
@@ -35,7 +38,10 @@ class DevmarktRequest
         $this->initializeRequest();
 
         $this->caseUrl = getenv('BOT_BASE_URI') . '/case.php?req_id=' . $this->testInput($this->req_id);
-        
+
+        $this->checkEmote = getenv("CHECK_EMOTE");
+        $this->blockEmote = getenv("BLOCK_EMOTE");
+
     }
 
     function initializeRequest()
@@ -195,14 +201,14 @@ class DevmarktRequest
     {
 
         $title = ($accepted ? 'Devmarkt-Anfrage angenommen' : 'Devmarkt-Anfrage abgelehnt');
-        $acceptsDMString = $acceptsDMs ? getenv("CHECK_EMOTE") : getenv("BLOCK_EMOTE");
+        $acceptsDMString = $acceptsDMs ? $this->checkEmote : $this->blockEmote;
         $color = ($accepted ? '3bd323' : 'f40909');
 
         return $this->generateEmbed($title, null, [
             $this->generateField('Bearbeitet von', $this->getUserInfo($login), false),
             $this->generateField('Anfragesteller', $this->getUserInfo($this->getApplicant()), false),
             $this->generateField('Akzeptiert DMs', $acceptsDMString, false),
-            $this->generateField('Pingt @everyone', $this->pingsEveryone() ? 'Ja' : 'Nein', false),
+            $this->generateField('Pingt @everyone', $this->pingsEveryone() ? $this->checkEmote : $this->blockEmote, false),
             $this->generateField('Case', '[**KLICK**](' . getenv('BOT_BASE_URI') . '/case.php?req_id=' . $this->testInput($this->req_id) . ')', true),
             $this->generateField('Nutzerinformationen', '[**KLICK**](' . getenv('BOT_BASE_URI') . '/user.php?user_id=' . $this->getApplicant()->getDiscordId() . ')', true),
         ],
