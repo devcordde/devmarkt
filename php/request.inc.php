@@ -195,7 +195,7 @@ class DevmarktRequest
     {
 
         $title = ($accepted ? 'Devmarkt-Anfrage angenommen' : 'Devmarkt-Anfrage abgelehnt');
-        $acceptsDMString = $acceptsDMs ? 'Akzeptiert Direktnachrichten' : 'Akzeptiert keine Direktnachrichten';
+        $acceptsDMString = $acceptsDMs ? getenv("CHECK_EMOTE") : getenv("BLOCK_EMOTE");
         $color = ($accepted ? '3bd323' : 'f40909');
 
         return $this->generateEmbed($title, null, [

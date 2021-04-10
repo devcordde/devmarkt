@@ -125,7 +125,7 @@ $res = $qry->execute();
 
 if ($res == 1) {
 
-    $res = sendMessage($devmarktRequestChannel, '@everyone', $embed, false);
+    $res = sendMessage($devmarktRequestChannel, '<@&' . getenv("GUILD_MOD_ID") .'>', $embed, false);
 
     $json = json_decode($res->getBody());
     $id = $json->id;
