@@ -78,7 +78,7 @@ if ($url_field != null) {
         $request->generateField('Type', $requestType, true),
         $url_field,
         $request->generateField('Request-ID', $requestId, true),
-        $request->generateField("Pingt @everyone", $everyonePing ? "Ja" : "Nein", false),
+        $request->generateField("Pingt @everyone", $everyonePing ? getenv("CHECK_EMOTE") : getenv("BLOCK_EMOTE"), false),
         $request->generateField('Nutzerinformationen', '[**Einsehen**](' . getenv('BOT_BASE_URI') . '/user.php?user_id=' . $login->getDiscordId() . ')', false),
         $request->generateField('Annehmen', "$clickTemplate($base_url/process.php?action=accept&req_id=$requestId)", false),
         $request->generateField('Ablehnen', "$clickTemplate($base_url/process.php?action=decline&req_id=$requestId)", false),
