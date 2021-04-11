@@ -100,6 +100,7 @@ $discordInvite = "https://discord.gg/PZaG3FS";
         <br>
         <h4>Hallo, <?php echo htmlentities($login->getUsername()); ?></h4>
         <br>
+        <p>Bitte achte bei deine Anfrage auf eine angemessene sprachliche Richtigkeit. Als Hilfe kannst du das <a href="https://languagetool.org/">LanguageTool</a> nutzen.</p>
         <label>
             <input type="text" min="10" name="titel" minlength="5" maxlength="50" placeholder="Titel deiner Einreichung">
         </label>
