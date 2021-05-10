@@ -3,7 +3,7 @@
 use JetBrains\PhpStorm\Pure;
 
 include_once('pdo.php');
-require getenv('APP_PATH') . '/inc/vendor/autoload.php';
+require getenv('APP_PATH') . '/vendor/autoload.php';
 include_once('login.inc.php');
 
 class DevmarktRequest

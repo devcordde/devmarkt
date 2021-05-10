@@ -1,0 +1,14 @@
+{
+    "name": "tills/bivieh_devmarkt",
+    "type": "project",
+    "require": {
+        "guzzlehttp/guzzle": "^7.3",
+        "wohali/oauth2-discord-new": "^1.1"
+    },
+    "authors": [
+        {
+            "name": "Till Schnegelsberg",
+            "email": "till.schnegelsberg@gmail.com"
+        }
+    ]
+}
