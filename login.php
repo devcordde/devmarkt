@@ -1,6 +1,6 @@
 <?php
 include_once 'pdo.php';
-require 'inc/vendor/autoload.php';
+require 'vendor/autoload.php';
 include_once 'php/login.inc.php';
 
 try {

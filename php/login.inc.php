@@ -4,7 +4,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
 include_once('pdo.php');
-require getenv("APP_PATH") . '/inc/vendor/autoload.php';
+require getenv("APP_PATH") . '/vendor/autoload.php';
 
 class User
 {
