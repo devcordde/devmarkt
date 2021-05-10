@@ -20,4 +20,6 @@ COPY docker/start-apache /usr/local/bin
 
 ENV APP_PATH=/var/www
 
+RUN composer install
+
 CMD ["start-apache"]
