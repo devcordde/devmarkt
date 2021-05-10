@@ -70,6 +70,7 @@ if (isset($_GET['action'], $_GET['req_id'])) {
 
         if ($_POST['access_token'] != $access_key) {
             echo 'wrong access key';
+            exit();
         }
 
         $request = new DevmarktRequest($req_id);
