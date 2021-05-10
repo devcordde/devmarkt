@@ -2,22 +2,30 @@ function checkInput(base_uri) {
 
     var desc = document.getElementById('desc');
 
-    $.post(base_uri,{text:desc.value}, function(data,status) {
+    var http = new XMLHttpRequest();
+    var params = 'text=' + desc.value;
 
-        $("#length").html(data + "/1000");
-        if(desc.value.length >= 1000) {
+    http.open('POST', base_uri, true);
+    http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
-            alert('Text zu lang!');
-            return false;
+    http.onreadystatechange = function() {
+        if(http.readyState == 4 && http.status == 200) {
+            document.getElementById('length').innerText = this.responseText + "/1000";
+            if (this.responseText >= 1000) {
 
-        } else return true;
+                alert('Text zu lang!');
+                return false;
 
-    });
+            } else return true;
+        }
+    }
+    http.send(params);
 
 }
 
+
 function checkAdditionalURL() {
-    
+
     var link = document.getElementById('additional_url');
 
     if (link.value.toLowerCase().includes("discord")) {
