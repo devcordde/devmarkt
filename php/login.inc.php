@@ -18,6 +18,8 @@ class User
     public string $dmChannel;
     public string $botToken = '';
 
+    public $thread;
+
     public bool $isBlocked;
     public bool $exists;
 
@@ -59,6 +61,12 @@ class User
         $this->rang = $st['rang'];
         $this->login_token = $st['login_token'];
         $this->isBlocked = $st['blocked'];
+
+        if(empty($st['thread'])) {
+            $this->thread = null;
+        } else {
+            $this->thread = $st['thread'];
+        }
 
         $this->exists = true;
         $this->fetchUser();
@@ -185,7 +193,7 @@ class User
         }
 
         $token = sha1(time() . md5($refreshCode));
-        $stmt = 'INSERT INTO `dc_users`(`id`, `discord_id`, `auth_code`, `refresh_code`, `rang`, `login_token`,`blocked`) VALUES (0,:discordId,:authCode,:refreshCode,"user",:loginToken,FALSE)';
+        $stmt = 'INSERT INTO `dc_users`(`id`, `discord_id`, `auth_code`, `refresh_code`, `rang`, `login_token`,`blocked`,`thread`) VALUES (0,:discordId,:authCode,:refreshCode,"user",:loginToken,FALSE,`thread`)';
         $qry = $pdo->prepare($stmt);
         $qry->bindParam(":discordId", $this->discordId);
         $qry->bindParam(":authCode", $authCode);
@@ -260,17 +268,119 @@ class User
 
     }
 
-    public function deleteMessage($channel, $message_id)
+    public function deleteMessage($channel, $message_id): bool
     {
         $client = new Client();
         try {
             $res = $client->request("DELETE", "https://discordapp.com/api/v6/channels/" . $channel . '/messages/' . $message_id, [
                 'headers' => ['Authorization' => 'Bot ' . $this->botToken]
             ]);
+            return true;
         } catch (GuzzleException) {
             return false;
         }
-        return json_decode($res->getBody());
+    }
+
+    public function createRejectThread() {
+
+        if($this->thread == null) {
+
+            $mysql = new MySQL();
+            $pdo = $mysql->getPDO();
+
+            $rejectThread = $this->createThreadWithoutMessage(getenv("GUILD_DEVMARKT_CHANNEL"),"Devmarkt-Anfrage " . $this->getUsername() . "#" . $this->getDiscriminator());
+            $stmt = "UPDATE `dc_users` SET `thread`=" . $rejectThread->id . " WHERE `discord_id`='" . $this->getDiscordId() . "'";
+            $qry = $pdo->prepare($stmt);
+            $qry->execute();
+
+            $this->thread = $rejectThread->id;
+
+            return $this->thread;
+
+        } else return $this->thread;
+
+    }
+
+    public function createThreadWithMessage($channel, $message_id, $name) {
+
+        $client = new Client();
+        try {
+
+            $res = $client->request("POST","https://discordapp.com/api/v9/channels" . $channel . '/messages/' . $message_id . '/threads', [
+                'headers' => ['Authorization' => 'Bot ' . $this->botToken, 'Content-Type' => 'application/json'],
+                'body'=>json_encode(["name"=>$name])
+            ]);
+            return json_decode($res->getBody());
+        } catch(GuzzleException) {
+            return null;
+        }
+        return false;
+    }
+
+    public function createThreadWithoutMessage($channel, $name) {
+
+        $client = new Client();
+        try {
+
+            $res = $client->request("POST","https://discordapp.com/api/v9/channels/" . $channel . '/threads', [
+                'headers' => ['Authorization' => 'Bot ' . $this->botToken,'Content-Type'=>'application/json'],
+                'body'=>json_encode([
+                    "name"=>$name,
+                    "auto_archive_duration"=>1440,
+                    "type"=>getenv("THREAD_TYPE"),
+                    "invitable"=>0,
+                ])
+            ]);
+            return json_decode($res->getBody());
+        } catch(GuzzleException $e) {
+            echo $e->getTraceAsString();
+            echo $e->getMessage();
+            return null;
+        }
+    }
+
+    public function addMemberToThread($thread_id, $user_id) {
+
+        $client = new Client();
+
+        try {
+
+            $res = $client->request("PUT","https://discordapp.com/api/v7/channels/" . $thread_id . "/thread-members/" . $user_id,
+            ['headers'=> ['Authorization' => 'Bot ' . $this->botToken, 'Content-Type'=>'application/json']]);
+            return json_decode($res->getBody());
+        } catch(GuzzleException $e) {
+            echo $e->getTraceAsString();
+            echo $e->getMessage();
+            return null;
+        }
+
+    }
+
+    public function userThreadArchived(): bool
+    {
+
+        if($this->thread == null) {
+            return false;
+        }
+
+        $client = new Client();
+        try {
+
+            $res = $client->request("GET","https://discordapp.com/api/v6/channels/" . $this->thread,
+                ['headers'=> ['Authorization' => 'Bot ' . $this->botToken, 'Content-Type'=>'application/json']]);
+            $thread = json_decode($res->getBody());
+
+            if($thread->thread_metadata->archived) {
+                return true;
+            }
+
+            return false;
+        } catch(GuzzleException $e) {
+            echo $e->getTraceAsString();
+            echo $e->getMessage();
+            echo 'Error';
+        }
+        return false;
     }
 
     public function hasRole($id, $guild)

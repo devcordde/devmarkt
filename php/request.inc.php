@@ -409,7 +409,7 @@ class DevmarktRequest
         return substr($haystack, 0, $length) === $needle;
     }
 
-    function rejectRequest($login, $reason): bool
+    function rejectRequest(User $login, $reason, $create_thread): bool
     {
 
         $this->request['reason'] = $this->testInput($reason);
@@ -418,8 +418,9 @@ class DevmarktRequest
         $dateProcessed = time();
 
         $dmEmbed = $this->generateDMEmbed(false, $login);
+        $delete = $login->deleteMessage(getenv("GUILD_DEVMARKT_REQUEST_CHANNEL"), $this->getMessageID());
 
-        if (!$login->deleteMessage(getenv("GUILD_DEVMARKT_REQUEST_CHANNEL"), $this->getMessageID())) {
+        if (!$delete) {
             echo 'Alte Nachricht konnte nicht gelöscht werden[ignore]';
         }
         if (!$this->updateRequest("abgelehnt", $login->getDiscordID(), $dateProcessed, $this->getMessageID())) {
@@ -428,6 +429,36 @@ class DevmarktRequest
         if (!$at->sendDMMessage(null, $dmEmbed, false, null)) {
             echo 'Nutzer nimmt keine DM-Nachrichten an. Persönlich kontaktieren! <a href="' . $this->caseUrl . '">Case</a>';
             $acceptsDMs = false;
+        }
+
+        if($create_thread) {
+
+
+                $thread_id = $this->getApplicant()->createRejectThread();
+
+                try {
+                    sendMessage($thread_id, null, $dmEmbed, null);
+                } catch(Exception $e) {
+                    $this->getApplicant()->thread = null;
+                    $thread_id = $this->getApplicant()->createRejectThread();
+                    sendMessage($thread_id, null, $dmEmbed, null);
+                }
+                try {
+
+                    $login->addMemberToThread($thread_id, $this->getApplicantID());
+                    $login->addMemberToThread($thread_id, $login->getDiscordId());
+                    sendMessage($thread_id, "<@" . $this->getApplicant()->getDiscordId() .">", null, false);
+                    sendMessage($thread_id, "Anfrage abgelehnt. Grund: " . $this->getReason(), null, false);
+                    $devmarktRequestEmbed = $this->generateProcessedEmbed(false, $login, $acceptsDMs);
+
+                } catch(Exception $e) {
+
+                    sendMessage(getenv("GUILD_DEVMARKT_REQUEST_CHANNEL"), null, $devmarktRequestEmbed, false);
+                    header('Location: ' . $this->caseUrl . "&error=" . urlencode($e->getMessage()));
+                    return true;
+
+                }
+
         }
 
         $devmarktRequestEmbed = $this->generateProcessedEmbed(false, $login, $acceptsDMs);

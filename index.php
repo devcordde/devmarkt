@@ -16,7 +16,7 @@ $discordInvite = "https://discord.gg/PZaG3FS";
 
 <head>
 
-    <title>Fehler - Devmarkt</title>
+    <title>DevCord - Devmarkt</title>
 
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
     <link rel="stylesheet" href="assets/css/style.css">
@@ -49,7 +49,7 @@ $discordInvite = "https://discord.gg/PZaG3FS";
     $token = new UserTokenHandler($_SESSION['token']);
     $login = new User($token->getDiscordID());
 
-     if (!$login->inGuild(getenv("GUILD_ID"))) {
+    if (!$login->inGuild(getenv("GUILD_ID"))) {
 
          ?>
 

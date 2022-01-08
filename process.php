@@ -45,6 +45,7 @@ if (isset($_GET['action'], $_GET['req_id'])) {
     if ($request->isProcessed()) {
         $processor = new User($st['processed_by']);
         echo 'Diese Anfrage wurde bereits von ' . $processor->getUsername() . '#' . $processor->getDiscriminator() . ' bearbeitet.';
+        exit();
     }
 
     $at = new User($st['by_discord_id']);
@@ -53,7 +54,11 @@ if (isset($_GET['action'], $_GET['req_id'])) {
         $request->acceptRequest($login);
     } else if ($status == 'decline') {
         if (isset($_POST['reason'])) {
-            $request->rejectRequest($login, $_POST['reason']);
+            if(isset($_POST['thread'])) {
+                $request->rejectRequest($login, $_POST['reason'], true);
+            } else {
+                $request->rejectRequest($login, $_POST['reason'],false);
+            }
         } else {
             echo file_get_contents('reason.php');
         }
