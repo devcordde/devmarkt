@@ -433,7 +433,6 @@ class DevmarktRequest
 
         if($create_thread) {
 
-
                 $thread_id = $this->getApplicant()->createRejectThread();
 
                 try {
