@@ -1,10 +1,27 @@
 <?php
+require getenv("APP_PATH") . '/vendor/autoload.php';
 include_once('pdo.php');
 set_error_handler("var_dump");
 include_once('php/login.inc.php');
 include_once('php/token.inc.php');
 include_once('php/checklogin.php');
 $mysql = new MySQL();
+$client = new \GuzzleHttp\Client();
+
+$thread = false;
+
+if(getenv("THREAD_TYPE") == 12) {
+
+    $req = $client->request("GET", "https://discordapp.com/api/v6/guilds/" . getenv("GUILD_ID"),[
+            "headers"=>["Authorization"=>"Bot " . getenv("BOT_TOKEN")]
+    ]);
+
+    if(json_decode($req->getBody())->premium_tier >= 2) {
+        $thread = true;
+    }
+
+}
+
 ?>
 
 <!DOCTYPE HTML>
@@ -38,7 +55,7 @@ $mysql = new MySQL();
 
         <input type="text" name="reason" placeholder="Grund" minlength="10" maxlength="500">
         <br><br>
-        <input type="checkbox" name="thread" placeholder="Thread erstellen">  <b>Thread erstellen</b>
+        <input type="checkbox" name="thread" placeholder="Thread erstellen" <?php if($thread == false) echo 'disabled'; ?>>  <b>Thread erstellen</b>
         <br><br>
         <input type="submit" value="Grund absenden">
 
