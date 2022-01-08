@@ -37,6 +37,9 @@ $mysql = new MySQL();
     <form method="POST">
 
         <input type="text" name="reason" placeholder="Grund" minlength="10" maxlength="500">
+        <br><br>
+        <input type="checkbox" name="thread" placeholder="Thread erstellen">  <b>Thread erstellen</b>
+        <br><br>
         <input type="submit" value="Grund absenden">
 
     </form>

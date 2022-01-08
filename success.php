@@ -9,7 +9,7 @@ include_once('pdo.php');
 
 <head>
 
-    <title>Success - Devmarkt</title>
+    <title>Anfrage erfolgreich gestellt - Devmarkt</title>
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
     <link rel="stylesheet" href="assets/css/style.css">
 
@@ -51,22 +51,7 @@ include_once('pdo.php');
 
         $("#success").animate({left: '25px',width: '25%',height:'150px',opacity:"1"},500);
         $("#text").animate({left: '30px',opacity:"1",'margin-right':'40%','margin-top':'11%'},500);
-
-        var i = 4;
-
-        setInterval(function() {
-
-
-                $("#text").html("Anfrage erfolgreich gestellt. (" + i + "s)");
-                i--;
-
-            if(i == 0) {
-
-                window.location = "<?php echo getenv("BOT_BASE_URI") ?>";
-
-            }
-
-        },1000);
+        $("#text").html("Anfrage erfolgreich gestellt.");
 
     });
 

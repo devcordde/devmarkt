@@ -36,7 +36,7 @@ class MySQL
 
         $pdoConnection = $this->getPDO();
 
-        $stmt = 'CREATE TABLE IF NOT EXISTS `dc_users` ( `id` INT NOT NULL AUTO_INCREMENT , `discord_id` VARCHAR(255) NOT NULL , `auth_code` VARCHAR(255) NOT NULL , `refresh_code` VARCHAR(255) NOT NULL , `rang` VARCHAR(50) NOT NULL , `login_token` VARCHAR(255),`blocked` BOOLEAN, PRIMARY KEY (`id`)) ENGINE = InnoDB;';
+        $stmt = 'CREATE TABLE IF NOT EXISTS `dc_users` ( `id` INT NOT NULL AUTO_INCREMENT , `discord_id` VARCHAR(255) NOT NULL , `auth_code` VARCHAR(255) NOT NULL , `refresh_code` VARCHAR(255) NOT NULL , `rang` VARCHAR(50) NOT NULL , `login_token` VARCHAR(255),`blocked` BOOLEAN, `thread` VARCHAR(200) NULL DEFAULT NULL, PRIMARY KEY (`id`)) ENGINE = InnoDB;';
         $qry = $pdoConnection->prepare($stmt);
         $qry->execute();
 
