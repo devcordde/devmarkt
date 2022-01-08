@@ -99,7 +99,7 @@ $discordInvite = "https://discord.gg/PZaG3FS";
         <h3 class="dv">Devmarkt-Anfrage einreichen</h3>
         <br>
         <h4>Hallo <?php echo htmlentities($login->getUsername()); ?>,</h4>
-        <p><strong>bitte achte bei deiner Anfrage auf eine angemessene sprachliche Richtigkeit. Als Hilfe kannst du das <a href="https://languagetool.org/">LanguageTool</a> nutzen.</strong></p>
+        <p><strong>bitte achte bei deiner Anfrage auf eine angemessene sprachliche Richtigkeit. <br>Als Hilfe kannst du das <a href="https://languagetool.org/">LanguageTool</a> nutzen.</strong></p>
 		<br>
         <label>
             <input type="text" min="10" name="titel" minlength="5" maxlength="50" placeholder="Titel deiner Einreichung">
@@ -155,7 +155,7 @@ $discordInvite = "https://discord.gg/PZaG3FS";
 </div>
 
 <footer>
-    <p><a href="https://github.com/T1Il/devcord_devmarkt/">T1Il</a> 20<?php echo date('y'); ?> (v1.2)</p>
+    <p><a href="https://github.com/T1Il/devcord_devmarkt/">T1Il</a> 20<?php echo date('y'); ?> (v1.3)</p>
 <br>
 <a href="impressum.html">Impressum/Datenschutzerklärung</a>
 </footer>
