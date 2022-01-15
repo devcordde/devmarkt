@@ -60,7 +60,7 @@ if (isset($_GET['action'], $_GET['req_id'])) {
                 $request->rejectRequest($login, $_POST['reason'],false);
             }
         } else {
-            echo file_get_contents('reason.php');
+            include('reason.php');
         }
 
     }
