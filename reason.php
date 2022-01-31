@@ -55,7 +55,7 @@ if(getenv("THREAD_TYPE") == 12) {
 
         <input type="text" name="reason" placeholder="Grund" minlength="10" maxlength="500">
         <br><br>
-        <input type="checkbox" name="thread" placeholder="Thread erstellen" <?php if($thread == false) echo 'disabled'; ?>>  <b>Thread erstellen</b>
+        <input type="checkbox" name="thread" placeholder="Thread erstellen" <?php if($thread == false) echo 'disabled'; ?> checked>  <b>Thread erstellen</b>
         <br><br>
         <input type="submit" value="Grund absenden">
 

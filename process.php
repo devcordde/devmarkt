@@ -8,6 +8,7 @@ include_once('php/checklogin.php');
 include_once('php/token.inc.php');
 include_once('php/login.inc.php');
 include_once('php/request.inc.php');
+$client = new \GuzzleHttp\Client();
 
 if (isset($_GET['action'], $_GET['req_id'])) {
 
@@ -42,6 +43,13 @@ if (isset($_GET['action'], $_GET['req_id'])) {
 
     $st = $qry->fetch();
 
+    if($qry->rowCount() <= 0) {
+
+        echo "Keine Anfrage mit dieser ID gefunden.";
+        exit();
+
+    }
+
     if ($request->isProcessed()) {
         $processor = new User($st['processed_by']);
         echo 'Diese Anfrage wurde bereits von ' . $processor->getUsername() . '#' . $processor->getDiscriminator() . ' bearbeitet.';
@@ -55,7 +63,14 @@ if (isset($_GET['action'], $_GET['req_id'])) {
     } else if ($status == 'decline') {
         if (isset($_POST['reason'])) {
             if(isset($_POST['thread'])) {
-                $request->rejectRequest($login, $_POST['reason'], true);
+                    $req = $client->request("GET", "https://discordapp.com/api/v6/guilds/" . getenv("GUILD_ID"),[
+                        "headers"=>["Authorization"=>"Bot " . getenv("BOT_TOKEN")]
+                    ]);
+                    if(json_decode($req->getBody())->premium_tier >= 2) {
+                        $request->rejectRequest($login, $_POST['reason'], true);
+                        return;
+                    }
+                    $request->rejectRequest($login, $_POST['reason'], false);
             } else {
                 $request->rejectRequest($login, $_POST['reason'],false);
             }
@@ -90,7 +105,7 @@ if (isset($_GET['action'], $_GET['req_id'])) {
                 $request->acceptRequest($login);
             } else if ($action == "decline") {
                 if (isset($_POST['reason'])) {
-                    $request->rejectRequest($login, $_POST['reason']);
+                    $request->rejectRequest($login, $_POST['reason'], true);
                 }
             }
         }
