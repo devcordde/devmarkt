@@ -49,6 +49,22 @@ $discordInvite = "https://discord.gg/PZaG3FS";
     $token = new UserTokenHandler($_SESSION['token']);
     $login = new User($token->getDiscordID());
 
+    $request_template = array("Title"=>"","Description"=>"","Color"=>"","Link"=>"");
+
+    if(isset($_GET['requestID'])) {
+
+        $request = new DevmarktRequest(htmlentities($_GET['requestID']));
+        if($request->getApplicant()->getDiscordId() == $login->getDiscordId()) {
+
+            $request_template["Title"] = $request->getTitle();
+            $request_template["Description"] = $request->getDescription();
+            $request_template["Color"] = $request->getColor();
+            $request_template["Link"] = $request->getURL();
+
+        }
+
+    }
+
     if (!$login->inGuild(getenv("GUILD_ID"))) {
 
          ?>
@@ -102,7 +118,7 @@ $discordInvite = "https://discord.gg/PZaG3FS";
         <p><strong>bitte achte bei deiner Anfrage auf eine angemessene sprachliche Richtigkeit. <br>Als Hilfe kannst du das <a href="https://languagetool.org/">LanguageTool</a> nutzen.</strong></p>
 		<br>
         <label>
-            <input type="text" min="10" name="titel" minlength="5" maxlength="50" placeholder="Titel deiner Einreichung">
+            <input type="text" min="10" name="titel" minlength="5" maxlength="50" placeholder="Titel deiner Einreichung" value="<?php echo $request_template["Title"]; ?>">
         </label>
         <br>
         <br>
@@ -110,7 +126,7 @@ $discordInvite = "https://discord.gg/PZaG3FS";
 
             <label for="color"><?php
             $color = random_color();
-            ?></label><input id="color" type="color" onchange="changeColor()" name="color" value="#<?php echo $color; ?>" style="background-color: #<?php echo $color; ?>">
+            ?></label><input id="color" type="color" onchange="changeColor()" name="color" value="#<?php if($request_template["Color"] != "") { echo $request_template["Color"]; } else echo $color; ?>" style="background-color: #<?php echo $color; ?>">
         <select name="type">
 
             <option value="Suche">Suche</option>
@@ -123,7 +139,7 @@ $discordInvite = "https://discord.gg/PZaG3FS";
         <br>
         <br>
 
-        <textarea oninput="checkInput('<?php echo getenv("BOT_BASE_URI") . '/strlen.php'; ?>',<?php echo getenv("MAX_DESCRIPTION_SIZE") - 96; ?>)" id="desc" name="beschreibung" class="beschreibung" minlength="100" maxlength="<?php echo getenv("MAX_DESCRIPTION_SIZE")-96; ?>" required></textarea>
+        <textarea oninput="checkInput('<?php echo getenv("BOT_BASE_URI") . '/strlen.php'; ?>',<?php echo getenv("MAX_DESCRIPTION_SIZE") - 96; ?>)" id="desc" name="beschreibung" class="beschreibung" minlength="100" maxlength="<?php echo getenv("MAX_DESCRIPTION_SIZE")-96; ?>" required><?php echo $request_template['Description']; ?></textarea>
 
         <p id="length"></p>
 

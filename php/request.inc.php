@@ -135,6 +135,8 @@ class DevmarktRequest
         $embedTitle = ($accepted ? "Devmarkt-Anfrage angenommen" : "Devmarkt-Anfrage abgelehnt");
         $embedColor = ($accepted ? '3bd323' : 'f40909');
         $embedReason = ($accepted ? "Devmarkt-Anfrage angenommen." : $this->request['reason']);
+        $embedCheck = ($accepted ? "Anfrage einsehen" : "Erneut einreichen");
+        $embedCheckValue = ($accepted ? '[**KLICK**](' . $this->caseUrl . ')' : '[**KLICK**](' . getenv("BOT_BASE_URI") . "/index.php?requestID=" . $this->getRequestId() . ')');
 
         return $this->generateEmbed(
 
@@ -145,8 +147,7 @@ class DevmarktRequest
                 $this->generateField("Begründung", $embedReason, true),
                 $this->generateField("Leitfaden", "[ **KLICK** ](https://discordapp.com/channels/486161636105650176/486921119513706496/489096136192163842)", true),
                 $this->generateField("Bearbeitet von", $this->getUserInfo($login), false),
-                $this->generateField("Anfrage einsehen", '[**Anfrage**](' . $this->caseUrl . ')', true)
-
+                $this->generateField($embedCheck, $embedCheckValue, true)
 
             ],
             true,
@@ -447,12 +448,10 @@ class DevmarktRequest
                     $login->addMemberToThread($thread_id, $this->getApplicantID());
                     $login->addMemberToThread($thread_id, $login->getDiscordId());
                     sendMessage($thread_id, "<@" . $this->getApplicant()->getDiscordId() .">", null, false);
-                    sendMessage($thread_id, "Anfrage abgelehnt. Grund: " . $this->getReason(), null, false);
                     $devmarktRequestEmbed = $this->generateProcessedEmbed(false, $login, $acceptsDMs);
 
                 } catch(Exception $e) {
 
-                    sendMessage(getenv("GUILD_DEVMARKT_REQUEST_CHANNEL"), null, $devmarktRequestEmbed, false);
                     header('Location: ' . $this->caseUrl . "&error=" . urlencode($e->getMessage()));
                     return true;
 

@@ -91,6 +91,8 @@ function testInput($data)
 
             <p>Bearbeitet von: <strong><?php echo $processor->getUsername() . '#' . $processor->getDiscriminator(); ?></strong></p>
 
+            <a class="resend" href="index.php?requestID=<?php echo $request->getRequestId(); ?>">Erneut einsenden</a>
+
             <?php
         }
     }
