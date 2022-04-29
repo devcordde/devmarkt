@@ -12,7 +12,7 @@ $thread = false;
 
 if(getenv("THREAD_TYPE") == 12) {
 
-    $req = $client->request("GET", "https://discordapp.com/api/v6/guilds/" . getenv("GUILD_ID"),[
+    $req = $client->request("GET", "https://discordapp.com/api/v8/guilds/" . getenv("GUILD_ID"),[
             "headers"=>["Authorization"=>"Bot " . getenv("BOT_TOKEN")]
     ]);
 

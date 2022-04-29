@@ -63,7 +63,7 @@ if (isset($_GET['action'], $_GET['req_id'])) {
     } else if ($status == 'decline') {
         if (isset($_POST['reason'])) {
             if(isset($_POST['thread'])) {
-                    $req = $client->request("GET", "https://discordapp.com/api/v6/guilds/" . getenv("GUILD_ID"),[
+                    $req = $client->request("GET", "https://discordapp.com/api/v8/guilds/" . getenv("GUILD_ID"),[
                         "headers"=>["Authorization"=>"Bot " . getenv("BOT_TOKEN")]
                     ]);
                     if(json_decode($req->getBody())->premium_tier >= 2) {
@@ -128,7 +128,7 @@ function sendMessage($channel, $content, $embed, $tts)
         'tts' => $tts,
     ]);
 
-    return $client->request("POST", "https://discordapp.com/api/v6/channels/" . $channel . "/messages", [
+    return $client->request("POST", "https://discordapp.com/api/v8/channels/" . $channel . "/messages", [
             'headers' => [
                 'Authorization' => 'Bot ' . getenv("BOT_TOKEN"),
                 'Content-Type' => 'application/json'

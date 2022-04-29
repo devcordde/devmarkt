@@ -1,10 +1,10 @@
 <?php
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
-
 include_once('pdo.php');
 require getenv("APP_PATH") . '/vendor/autoload.php';
+
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 
 class User
 {
@@ -88,7 +88,7 @@ class User
 
         $client = new GuzzleHttp\Client();
         try {
-            $res = $client->request('GET', 'https://discordapp.com/api/v6/users/' . $this->discordId, [
+            $res = $client->request('GET', 'https://discordapp.com/api/v8/users/' . $this->discordId, [
                 'headers' => ['Authorization' => 'Bot ' . $this->botToken]
             ]);
         } catch (GuzzleException) {
@@ -102,7 +102,6 @@ class User
 
     public function isBlocked(): bool
     {
-
         if (!$this->exists) {
             return false;
         }
@@ -229,7 +228,7 @@ class User
         $channel_id = $this->openDMChannel();
         $client = new Client();
         try {
-            $res = $client->request("POST", "https://discordapp.com/api/v6/channels/" . $channel_id . "/messages", [
+            $res = $client->request("POST", "https://discordapp.com/api/v8/channels/" . $channel_id . "/messages", [
                 'headers' => ['Authorization' => 'Bot ' . $this->botToken, 'Content-Type' => 'application/json'],
                 'body' => json_encode([
                     'content' => $content,
@@ -253,7 +252,7 @@ class User
 
         $client = new Client();
 
-        $res = $client->request("POST", "https://discordapp.com/api/v6/users/@me/channels", [
+        $res = $client->request("POST", "https://discordapp.com/api/v8/users/@me/channels", [
 
             'headers' => ['Authorization' => 'Bot ' . $this->botToken, 'Content-Type' => 'application/json'],
             'body' => json_encode(['recipient_id' => $this->discordId]),
@@ -272,7 +271,7 @@ class User
     {
         $client = new Client();
         try {
-            $res = $client->request("DELETE", "https://discordapp.com/api/v6/channels/" . $channel . '/messages/' . $message_id, [
+            $res = $client->request("DELETE", "https://discordapp.com/api/v8/channels/" . $channel . '/messages/' . $message_id, [
                 'headers' => ['Authorization' => 'Bot ' . $this->botToken]
             ]);
             return true;
@@ -366,7 +365,7 @@ class User
         $client = new Client();
         try {
 
-            $res = $client->request("GET","https://discordapp.com/api/v6/channels/" . $this->thread,
+            $res = $client->request("GET","https://discordapp.com/api/v8/channels/" . $this->thread,
                 ['headers'=> ['Authorization' => 'Bot ' . $this->botToken, 'Content-Type'=>'application/json']]);
             $thread = json_decode($res->getBody());
 
@@ -412,7 +411,7 @@ class User
             return false;
         }
         $client = new Client();
-        $res = $client->request("GET", "https://discordapp.com/api/v6/guilds/" . $id . "/members/" . $this->discordId, [
+        $res = $client->request("GET", "https://discordapp.com/api/v8/guilds/" . $id . "/members/" . $this->discordId, [
             'headers' => ['Authorization' => 'Bot ' . $this->botToken]
         ]);
         return json_decode($res->getBody())->roles;
@@ -478,7 +477,7 @@ class User
 
         $client = new GuzzleHttp\Client();
 
-        $res = $client->request('GET', 'https://discordapp.com/api/v6/users/@me/guilds', [
+        $res = $client->request('GET', 'https://discordapp.com/api/v8/users/@me/guilds', [
             'headers' => ['Authorization' => 'Bearer ' . $this->auth_code]
         ]);
 
