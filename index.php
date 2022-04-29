@@ -123,7 +123,8 @@ $discordInvite = "https://discord.gg/PZaG3FS";
         <br>
         <br>
 
-        <textarea oninput="checkInput('<?php echo getenv("BOT_BASE_URI") . '/strlen.php'; ?>')" id="desc" name="beschreibung" class="beschreibung" minlength="100" maxlength="1000" required></textarea>
+        <textarea oninput="checkInput('<?php echo getenv("BOT_BASE_URI") . '/strlen.php'; ?>',<?php echo getenv("MAX_DESCRIPTION_SIZE") - 96; ?>)" id="desc" name="beschreibung" class="beschreibung" minlength="100" maxlength="<?php echo getenv("MAX_DESCRIPTION_SIZE")-96; ?>" required></textarea>
+
         <p id="length"></p>
 
         <br>
