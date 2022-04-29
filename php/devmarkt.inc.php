@@ -41,6 +41,18 @@ if($_POST['titel'] == '' || $_POST['beschreibung'] == '') {
 $requestTitle = testInput($_POST['titel']);
 $requestType = testInput($_POST['type']);
 $requestDescription = testInput($_POST['beschreibung']);
+
+if(strlen($requestDescription) > 1024) {
+
+    $trimmedDescription = substr($requestDescription,0,1024);
+    $containsmorekeys = "*ENTHÄLT MEHR ALS 1024 ZEICHEN, MANUELL PRÜFEN*";
+
+} else {
+    $containsmorekeys = "";
+    $trimmedDescription = $requestDescription;
+}
+
+$trimmedDescription = str_replace('@everyone', '', $trimmedDescription);
 $requestDescription = str_replace('@everyone', '', $requestDescription);
 $requestId = substr(sha1(sha1($requestTitle . sha1(md5($requestType))) . time()), 30);
 $requestColor = hexdec(testInput(str_replace('#','',$_POST['color'])));
@@ -48,7 +60,7 @@ $everyonePing = false;
 
 if (!(strlen($requestTitle) < 51
     && strlen($requestType) < 21
-    && strlen($requestDescription) < 1024
+    && strlen($requestDescription) < getenv("MAX_DESCRIPTION_SIZE")
     && strlen($requestDescription) > 100)) {
     header($location . '/?error=size');
 }
@@ -74,25 +86,25 @@ $clickTemplate = '[**KLICK**]';
 if ($url_field != null) {
     $fields = [
         $request->generateField('Titel', html_entity_decode($requestTitle), true),
-        $request->generateField('Beschreibung', $requestDescription, true),
+        $request->generateField('Beschreibung', $trimmedDescription, true),
         $request->generateField('Type', $requestType, true),
         $url_field,
         $request->generateField('Request-ID', $requestId, true),
         $request->generateField("Pingt @everyone", $everyonePing ? getenv("CHECK_EMOTE") : getenv("BLOCK_EMOTE"), false),
         $request->generateField('Nutzerinformationen', '[**Einsehen**](' . getenv('BOT_BASE_URI') . '/user.php?user_id=' . $login->getDiscordId() . ')', false),
-        $request->generateField('Annehmen', "$clickTemplate($base_url/process.php?action=accept&req_id=$requestId)", false),
-        $request->generateField('Ablehnen', "$clickTemplate($base_url/process.php?action=decline&req_id=$requestId)", false),
+        $request->generateField('Annehmen', "$clickTemplate($base_url/process.php?action=accept&req_id=$requestId) " . $containsmorekeys, false),
+        $request->generateField('Ablehnen', "$clickTemplate($base_url/process.php?action=decline&req_id=$requestId) " . $containsmorekeys, false),
     ];
 } else {
     $fields = [
         $request->generateField('Titel', html_entity_decode($requestTitle), true),
-        $request->generateField('Beschreibung', $requestDescription, true),
+        $request->generateField('Beschreibung', $trimmedDescription, true),
         $request->generateField('Type', $requestType, true),
         $request->generateField('Request-ID', $requestId, true),
         $request->generateField("Pingt @everyone", $everyonePing ? getenv("CHECK_EMOTE") : getenv("BLOCK_EMOTE"), false),
         $request->generateField('Nutzerinformationen', '[**Einsehen**](' . getenv('BOT_BASE_URI') . '/user.php?user_id=' . $login->getDiscordId() . ')', false),
-        $request->generateField('Annehmen', '[**KLICK**](' . $base_url . '/process.php?action=accept&req_id=' . $requestId . ')', false),
-        $request->generateField('Ablehnen', '[**KLICK**](' . $base_url . '/process.php?action=decline&req_id=' . $requestId . ')', false),
+        $request->generateField('Annehmen', '[**KLICK**](' . $base_url . '/process.php?action=accept&req_id=' . $requestId . ') ' . $containsmorekeys, false),
+        $request->generateField('Ablehnen', '[**KLICK**](' . $base_url . '/process.php?action=decline&req_id=' . $requestId . ') ' . $containsmorekeys, false),
     ];
 }
 $embed = $request->generateEmbed('Neue Devmarkt-Anfrage',
@@ -163,7 +175,7 @@ function sendMessage($channel, $content, $embed, $tts)
         'tts' => $tts,
     ]);
 
-    return $client->request('POST', 'https://discordapp.com/api/v6/channels/' . $channel . '/messages', [
+    return $client->request('POST', 'https://discordapp.com/api/v8/channels/' . $channel . '/messages', [
             'headers' => [
                 'Authorization' => 'Bot ' . getenv('BOT_TOKEN'),
                 'Content-Type' => 'application/json'

@@ -40,7 +40,7 @@ class MySQL
         $qry = $pdoConnection->prepare($stmt);
         $qry->execute();
 
-        $stmt1 = 'CREATE TABLE `anfragen` ( `id` INT NOT NULL AUTO_INCREMENT , `by_discord_id` VARCHAR(255) NOT NULL , `title` VARCHAR(100) NOT NULL , `type` VARCHAR(20) NOT NULL , `description` VARCHAR(1200) NOT NULL , `link` VARCHAR(100) NOT NULL , `req_id` VARCHAR(100) NOT NULL , `status` VARCHAR(100) NOT NULL , `processed_by` VARCHAR(100) NOT NULL ,`message_id` VARCHAR(100),`date` VARCHAR(100),`date_processed` VARCHAR(100),`color` VARCHAR(100),`reason` VARCHAR(500),`options` VARCHAR(200), PRIMARY KEY (`id`)) ENGINE = InnoDB;';
+        $stmt1 = 'CREATE TABLE `anfragen` ( `id` INT NOT NULL AUTO_INCREMENT , `by_discord_id` VARCHAR(255) NOT NULL , `title` VARCHAR(100) NOT NULL , `type` VARCHAR(20) NOT NULL , `description` VARCHAR(' . getenv("MAX_DESCRIPTION_SIZE") . ') NOT NULL , `link` VARCHAR(100) NOT NULL , `req_id` VARCHAR(100) NOT NULL , `status` VARCHAR(100) NOT NULL , `processed_by` VARCHAR(100) NOT NULL ,`message_id` VARCHAR(100),`date` VARCHAR(100),`date_processed` VARCHAR(100),`color` VARCHAR(100),`reason` VARCHAR(500),`options` VARCHAR(200), PRIMARY KEY (`id`)) ENGINE = InnoDB;';
         $qry1 = $pdoConnection->prepare($stmt1);
         $qry1->execute();
 
