@@ -241,7 +241,7 @@ class DevmarktRequest
         if (!$this->valid) {
             return false;
         }
-        if ($this->request['options'] == null) {
+        if ($this->requestR['options'] == null) {
             return null;
         }
 
