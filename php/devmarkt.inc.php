@@ -48,7 +48,7 @@ $everyonePing = false;
 
 if (!(strlen($requestTitle) < 51
     && strlen($requestType) < 21
-    && strlen($requestDescription) < 1024
+    && strlen($requestDescription) < 4096
     && strlen($requestDescription) > 100)) {
     header($location . '/?error=size');
 }
