@@ -10,8 +10,8 @@ function checkInput(base_uri) {
 
     http.onreadystatechange = function() {
         if(http.readyState == 4 && http.status == 200) {
-            document.getElementById('length').innerText = this.responseText + "/1000";
-            if (this.responseText >= 1000) {
+            document.getElementById('length').innerText = this.responseText + "/3900";
+            if (this.responseText >= 3900) {
 
                 alert('Text zu lang!');
                 return false;
