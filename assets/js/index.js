@@ -1,4 +1,4 @@
-function checkInput(base_uri) {
+function checkInput(base_uri, max_size) {
 
     var desc = document.getElementById('desc');
 
@@ -9,9 +9,12 @@ function checkInput(base_uri) {
     http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
     http.onreadystatechange = function() {
-        if(http.readyState == 4 && http.status == 200) {
-            document.getElementById('length').innerText = this.responseText + "/3900";
-            if (this.responseText >= 3900) {
+        if(http.readyState === 4 && http.status === 200) {
+
+            document.getElementById('length').innerText = this.responseText + "/" + max_size;
+            console.log(max_size);
+            console.log(this.responseText);
+            if (this.responseText > max_size) {
 
                 alert('Text zu lang!');
                 return false;
