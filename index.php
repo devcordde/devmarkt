@@ -54,7 +54,7 @@ $discordInvite = "https://discord.gg/PZaG3FS";
     if(isset($_GET['requestID'])) {
 
         $request = new DevmarktRequest(htmlentities($_GET['requestID']));
-        if($request->getApplicant()->getDiscordId() == $login->getDiscordId()) {
+        if($request->getApplicant()->getDiscordId() == $login->getDiscordId() || $login->isModerator()) {
 
             $request_template["Title"] = $request->getTitle();
             $request_template["Description"] = $request->getDescription();
