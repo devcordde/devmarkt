@@ -135,7 +135,7 @@ class DevmarktRequest
         $embedTitle = ($accepted ? "Devmarkt-Anfrage angenommen" : "Devmarkt-Anfrage abgelehnt");
         $embedColor = ($accepted ? '3bd323' : 'f40909');
         $embedReason = ($accepted ? "Devmarkt-Anfrage angenommen." : $this->request['reason']);
-        $embedCheck = ($accepted ? "Anfrage einsehen" : "Erneut einreichen");
+        $embedCheck = ($accepted ? "Anfrage einsehen" : "Erneut einreichen und bearbeiten");
         $embedCheckValue = ($accepted ? '[**KLICK**](' . $this->caseUrl . ')' : '[**KLICK**](' . getenv("BOT_BASE_URI") . "/index.php?requestID=" . $this->getRequestId() . ')');
 
         return $this->generateEmbed(
