@@ -174,7 +174,7 @@ $discordInvite = "https://discord.gg/PZaG3FS";
 <footer>
     <p><a href="https://github.com/T1Il/devcord_devmarkt/">T1Il</a> 20<?php echo date('y'); ?> (v1.4)</p>
 <br>
-<a href="impressum.html">Impressum/Datenschutzerklärung</a>
+<a href="impressum.html">Impressum</a>/<a href="datenschutz.html">Datenschutzerklärung</a>
 </footer>
 </body>
 

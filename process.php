@@ -58,6 +58,11 @@ if (isset($_GET['action'], $_GET['req_id'])) {
 
     $at = new User($st['by_discord_id']);
 
+    if(!$login->inGuild($st['by_discord_id'])) {
+        echo 'Nutzer ist nicht mehr auf dem Discord.';
+        exit();
+    }
+
     if ($status == 'angenommen') {
         $request->acceptRequest($login);
     } else if ($status == 'decline') {
