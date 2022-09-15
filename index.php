@@ -81,7 +81,7 @@ $discordInvite = "https://discord.gg/PZaG3FS";
 
         foreach($unresolvedRequests as $request) {
 
-            $uRS .= "<a href=case.php?req_id=".$request['req_id'].">" . $request['title'] ."</a><br> ";
+            $uRS .= "<a href=case.php?req_id=".htmlentities($request['req_id']).">" . htmlentities($request['title']) ."</a><br> ";
 
         }
 
