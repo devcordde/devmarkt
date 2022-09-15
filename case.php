@@ -51,6 +51,14 @@ function testInput($data)
 
     if ($request->valid) {
         $as = $request->getApplicant();
+
+        $active = true;
+
+        if($as->inGuild(getenv("GUILD_ID"))) {
+            echo '<p>Nutzer nicht mehr auf dem Discord!</p>';
+            $active = false;
+        }
+
         $sta = explode(":", $request->getStatus());
         ?>
         <p>Fall-ID: <strong><?php echo $request->getRequestId(); ?></strong></p>
@@ -68,7 +76,7 @@ function testInput($data)
         ?>
         <br>
         <p>Von:
-            <strong><?php echo testInput($as->getUsername() . "#" . $as->getDiscriminator() . ' : ' . $as->getDiscordId()); ?></strong>
+            <strong><?php if($active) { echo testInput($as->getUsername() . "#" . $as->getDiscriminator() . ' : ' . $as->getDiscordId()); }else echo "Nutzer nicht mehr auf dem Discord"; ?></strong>
         </p>
         <br>
         <p>Datum: <strong><?php echo date("d.m.y - H:i:s", $request->getDate()); ?></strong></p>
