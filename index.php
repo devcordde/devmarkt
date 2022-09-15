@@ -4,6 +4,7 @@ include_once('php/login.inc.php');
 include_once('php/token.inc.php');
 include_once('php/checklogin.php');
 include_once('php/request.inc.php');
+include_once('php/devmarkt.class.php');
 $mysql = new MySQL();
 $base_url = getenv("BOT_BASE_URI");
 $discordInvite = "https://discord.gg/PZaG3FS";
@@ -62,6 +63,29 @@ $discordInvite = "https://discord.gg/PZaG3FS";
             $request_template["Link"] = $request->getURL();
 
         }
+
+    }
+
+    if($login->isModerator()) {
+
+        $devmarkt = new Devmarkt($login);
+
+        $unresolvedRequests = $devmarkt->getUnresolvedRequests();
+        $uRS = "";
+
+        ?>
+
+        <h5>Nicht bearbeitete Anfragen: </h5>
+
+    <?php
+
+        foreach($unresolvedRequests as $request) {
+
+            $uRS .= "<a href=case.php?req_id=".$request['req_id'].">" . $request['title'] ."</a><br> ";
+
+        }
+
+        echo $uRS;
 
     }
 

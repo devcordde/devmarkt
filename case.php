@@ -94,6 +94,16 @@ function testInput($data)
             <a class="resend" href="index.php?requestID=<?php echo $request->getRequestId(); ?>">Erneut einsenden</a>
 
             <?php
+        } else if(!$request->isProcessed() && $login->isModerator()) {
+
+            ?>
+            <br>
+            <br>
+            <a class="angenommen" href="process.php?action=accept&req_id=<?php echo $request->getRequestId();?>">Annehmen</a>
+            <a class="abgelehnt" href="process.php?action=decline&req_id=<?php echo $request->getRequestId();?>">Ablehnen</a>
+
+    <?php
+
         }
     }
     ?>
