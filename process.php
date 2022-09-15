@@ -58,7 +58,7 @@ if (isset($_GET['action'], $_GET['req_id'])) {
 
     $at = new User($st['by_discord_id']);
 
-    if(!$login->inGuild($st['by_discord_id'])) {
+    if(!$at->inGuild(getenv("GUILD_ID"))) {
         echo 'Nutzer ist nicht mehr auf dem Discord.';
         exit();
     }
