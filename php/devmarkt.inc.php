@@ -175,7 +175,7 @@ function sendMessage($channel, $content, $embed, $tts)
         'tts' => $tts,
     ]);
 
-    return $client->request('POST', 'https://discordapp.com/api/v8/channels/' . $channel . '/messages', [
+    return $client->request('POST', 'https://discord.com/api/v8/channels/' . $channel . '/messages', [
             'headers' => [
                 'Authorization' => 'Bot ' . getenv('BOT_TOKEN'),
                 'Content-Type' => 'application/json'
