@@ -145,7 +145,7 @@ class DevmarktRequest
             [
 
                 $this->generateField("Begründung", $embedReason, true),
-                $this->generateField("Leitfaden", "[ **KLICK** ](https://discordapp.com/channels/486161636105650176/486921119513706496/489096136192163842)", true),
+                $this->generateField("Leitfaden", "[ **KLICK** ](https://discord.com/channels/486161636105650176/486921119513706496/489096136192163842)", true),
                 $this->generateField("Bearbeitet von", $this->getUserInfo($login), false),
                 $this->generateField($embedCheck, $embedCheckValue, true)
 
