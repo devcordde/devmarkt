@@ -54,7 +54,7 @@ function testInput($data)
 
         $active = true;
 
-        if($as->inGuild(getenv("GUILD_ID"))) {
+        if(!$as->inGuild(getenv("GUILD_ID"))) {
             echo '<p>Nutzer nicht mehr auf dem Discord!</p>';
             $active = false;
         }
