@@ -71,10 +71,12 @@ if (isset($_GET['action'], $_GET['req_id'])) {
                     $req = $client->request("GET", "https://discord.com/api/v8/guilds/" . getenv("GUILD_ID"),[
                         "headers"=>["Authorization"=>"Bot " . getenv("BOT_TOKEN")]
                     ]);
-                    if(json_decode($req->getBody())->premium_tier >= 2) {
+
+                    if(json_decode($req->getBody())->premium_tier >= 2 || in_array("PARTNERED", json_decode($req->getBody())->features)) {
                         $request->rejectRequest($login, $_POST['reason'], true);
                         return;
                     }
+
                     $request->rejectRequest($login, $_POST['reason'], false);
             } else {
                 $request->rejectRequest($login, $_POST['reason'],false);

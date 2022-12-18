@@ -16,7 +16,7 @@ if(getenv("THREAD_TYPE") == 12) {
             "headers"=>["Authorization"=>"Bot " . getenv("BOT_TOKEN")]
     ]);
 
-    if(json_decode($req->getBody())->premium_tier >= 2) {
+    if(json_decode($req->getBody())->premium_tier >= 2 || in_array("PARTNERED", json_decode($req->getBody())->features)) {
         $thread = true;
     }
 
