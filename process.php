@@ -10,7 +10,38 @@ include_once('php/login.inc.php');
 include_once('php/request.inc.php');
 $client = new \GuzzleHttp\Client();
 
-if (isset($_GET['action'], $_GET['req_id'])) {
+if (isset($_POST['access_token'], $_POST['req_id'], $_POST['action'], $_POST['moderator_id'])) {
+
+    $access_key = getenv('BOT_ACCESS_TOKEN');
+    $req_id = $_POST['req_id'];
+    $action = $_POST['action'];
+    $moderator = $_POST['moderator_id'];
+
+    $req_id = substr($req_id,1,10);
+
+    if ($_POST['access_token'] != $access_key) {
+        echo 'wrong access key';
+        exit();
+    }
+
+    $request = new DevmarktRequest($req_id);
+
+    if (!$request->valid
+        || $request->isProcessed()) {
+        exit();
+    }
+    $login = new User($moderator);
+    if ($login->isModerator()) {
+        if ($action == "accept") {
+            $request->acceptRequest($login);
+        } else if ($action == "decline") {
+            if (isset($_POST['reason'])) {
+                $request->rejectRequest($login, $_POST['reason'], true);
+            }
+        }
+    }
+
+} else if (isset($_GET['action'], $_GET['req_id'])) {
 
     if (!check()) {
         header('Location: login.php?req_id=' . testInput($_GET['req_id']) . '&action=' . testInput($_GET['action']));
@@ -76,7 +107,6 @@ if (isset($_GET['action'], $_GET['req_id'])) {
                         $request->rejectRequest($login, $_POST['reason'], true);
                         return;
                     }
-
                     $request->rejectRequest($login, $_POST['reason'], false);
             } else {
                 $request->rejectRequest($login, $_POST['reason'],false);
@@ -87,37 +117,7 @@ if (isset($_GET['action'], $_GET['req_id'])) {
 
     }
 
-} else
-    if (isset($_POST['access_token'], $_POST['req_id'], $_POST['action'], $_POST['moderator_id'])) {
-
-        $access_key = getenv('BOT_ACCESS_TOKEN');
-        $req_id = $_POST['req_id'];
-        $action = $_POST['action'];
-        $moderator = $_POST['moderator_id'];
-
-        if ($_POST['access_token'] != $access_key) {
-            echo 'wrong access key';
-            exit();
-        }
-
-        $request = new DevmarktRequest($req_id);
-
-        if (!$request->valid
-            || $request->isProcessed()) {
-            exit();
-        }
-        $login = new User($moderator);
-        if ($login->isModerator()) {
-            if ($action == "accept") {
-                $request->acceptRequest($login);
-            } else if ($action == "decline") {
-                if (isset($_POST['reason'])) {
-                    $request->rejectRequest($login, $_POST['reason'], true);
-                }
-            }
-        }
-
-    }
+}
 
 #[Pure] function testInput($data): string
 {
