@@ -420,11 +420,11 @@ class User
     public function getAvatarURL(): string
     {
         if ($this->getAvatar() != null) {
-            $avatar = 'https://cdn.discord.com/avatars/' . $this->getDiscordId() . '/' . $this->getAvatar() . '.png';
+            $avatar = 'https://cdn.discordapp.com/avatars/' . $this->getDiscordId() . '/' . $this->getAvatar() . '.png';
         } else {
             $discriminator = $this->getDiscriminator();
             $avatar_id = $discriminator % 5;
-            $avatar = 'https://cdn.discord.com/embed/avatars/' . $avatar_id . '.png';
+            $avatar = 'https://cdn.discordapp.com/embed/avatars/' . $avatar_id . '.png';
         }
         return $avatar;
     }
