@@ -19,8 +19,8 @@ $discordInvite = "https://discord.gg/PZaG3FS";
 
     <title>DevCord - Devmarkt</title>
 
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon_christmas.png">
+    <link rel="stylesheet" href="assets/css/style_christmas.css">
 
     <meta charset="utf-8"/>
     <meta name="description" content="Interface des Devmarktes für den DevCord-Discord. Hier kannst du Anfragen in den Devmarkt schicken, die vor Veröffentlichung geprüft werden."/>
@@ -38,7 +38,8 @@ $discordInvite = "https://discord.gg/PZaG3FS";
 
 <body>
 
-<div class="form">
+<div class="snow">
+<div class="form snow">
 
 <?php if(!check()) { ?>
 
@@ -190,16 +191,19 @@ $discordInvite = "https://discord.gg/PZaG3FS";
 
     </form>
 
+</div>
+</div>
+
 <?php }
 } ?>
-
-</div>
 
 <footer>
     <p><a href="https://github.com/T1Il/devcord_devmarkt/">T1Il</a> 20<?php echo date('y'); ?> (v1.5)</p>
 <br>
 <a href="impressum.html">Impressum</a>/<a href="datenschutz.html">Datenschutzerklärung</a>
 </footer>
+
+
 </body>
 
 </html>

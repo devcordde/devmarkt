@@ -11,7 +11,7 @@ include_once('pdo.php');
 
     <title>Anfrage erfolgreich gestellt - Devmarkt</title>
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style_christmas.css">
 
     <meta charset="utf-8"/>
     <meta name="description" content="Interface des Devmarktes für den DevCord-Discord. Hier kannst du Anfragen in den Devmarkt schicken, die vor Veröffentlichung geprüft werden."/>
@@ -21,7 +21,6 @@ include_once('pdo.php');
     <meta property="og:title" content="DevCord Devmarkt für Developer und Serverbetreiber"/>
     <meta property="og:description" content="Interface des Devmarktes für den DevCord-Discord. Hier kannst du Anfragen in den Devmarkt schicken, die vor Veröffentlichung geprüft werden."/>
     <meta property="og:site_name" content="DevCord Devmarkt"/>
-    <link rel="stylesheet" href="assets/css/style.css">
 
 </head>
 

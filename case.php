@@ -41,7 +41,7 @@ function testInput($data)
 
 <head>
     <title>Case <?php echo testInput($_GET['req_id']); ?></title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style_christmas.css">
 </head>
 <body>
 
