@@ -1,0 +1,459 @@
+@font-face {
+    font-family: 'Raleway-Black';
+    src: url('../fonts/Raleway-Black.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/Roboto-Light.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.snow {
+    border: 1px solid rgba(255, 0, 0, 0.1);
+    background-image: url("data:image/svg+xml,%3Csvg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 50 50' style='enable-background:new 0 0 50 50%3B' xml:space='preserve'%3E%3Cstyle type='text/css'%3E.st1%7Bopacity:0.3%3Bfill:%23FFFFFF%3B%7D.st3%7Bopacity:0.1%3Bfill:%23FFFFFF%3B%7D%3C/style%3E%3Ccircle class='st1' cx='5' cy='8' r='1'/%3E%3Ccircle class='st1' cx='38' cy='3' r='1'/%3E%3Ccircle class='st1' cx='12' cy='4' r='1'/%3E%3Ccircle class='st1' cx='16' cy='16' r='1'/%3E%3Ccircle class='st1' cx='47' cy='46' r='1'/%3E%3Ccircle class='st1' cx='32' cy='10' r='1'/%3E%3Ccircle class='st1' cx='3' cy='46' r='1'/%3E%3Ccircle class='st1' cx='45' cy='13' r='1'/%3E%3Ccircle class='st1' cx='10' cy='28' r='1'/%3E%3Ccircle class='st1' cx='22' cy='35' r='1'/%3E%3Ccircle class='st1' cx='3' cy='21' r='1'/%3E%3Ccircle class='st1' cx='26' cy='20' r='1'/%3E%3Ccircle class='st1' cx='30' cy='45' r='1'/%3E%3Ccircle class='st1' cx='15' cy='45' r='1'/%3E%3Ccircle class='st1' cx='34' cy='36' r='1'/%3E%3Ccircle class='st1' cx='41' cy='32' r='1'/%3E%3C/svg%3E");
+    animation: animatedBackground 10s linear infinite;
+}
+
+.snow div {
+    background-image: url("data:image/svg+xml,%3Csvg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 50 50' style='enable-background:new 0 0 50 50%3B' xml:space='preserve'%3E%3Cstyle type='text/css'%3E.st1%7Bopacity:0.7%3Bfill:%23FFFFFF%3B%7D.st3%7Bopacity:0.1%3Bfill:%23FFFFFF%3B%7D%3C/style%3E%3Ccircle class='st3' cx='4' cy='14' r='1'/%3E%3Ccircle class='st3' cx='43' cy='3' r='1'/%3E%3Ccircle class='st3' cx='31' cy='30' r='2'/%3E%3Ccircle class='st3' cx='19' cy='23' r='1'/%3E%3Ccircle class='st3' cx='37' cy='22' r='1'/%3E%3Ccircle class='st3' cx='43' cy='16' r='1'/%3E%3Ccircle class='st3' cx='8' cy='45' r='1'/%3E%3Ccircle class='st3' cx='29' cy='39' r='1'/%3E%3Ccircle class='st3' cx='13' cy='37' r='1'/%3E%3Ccircle class='st3' cx='47' cy='32' r='1'/%3E%3Ccircle class='st3' cx='15' cy='4' r='2'/%3E%3Ccircle class='st3' cx='9' cy='27' r='1'/%3E%3Ccircle class='st3' cx='30' cy='9' r='1'/%3E%3Ccircle class='st3' cx='25' cy='15' r='1'/%3E%3Ccircle class='st3' cx='21' cy='45' r='2'/%3E%3Ccircle class='st3' cx='42' cy='45' r='1'/%3E%3C/svg%3E");
+    background-position: 0px 0px;
+    animation: animatedBackground 15s linear infinite;
+}
+
+@keyframes animatedBackground {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 0px 300px;
+    }
+}
+
+
+.unprocessed {
+
+    text-transform: uppercase;
+    color: white;
+    background-color: gray;
+    padding: 10px 10px;
+
+}
+
+footer {
+
+    position: fixed;
+    bottom: 0;
+
+}
+
+.angenommen {
+
+    text-transform: uppercase;
+    color: white;
+    background-color: green;
+    padding: 10px 10px;
+
+}
+
+.error {
+
+    border: 3px solid red;
+    padding: 10px 10px;
+
+}
+
+.abgelehnt {
+
+    text-transform: uppercase;
+    color: white;
+    background-color: darkred;
+    padding: 10px 10px;
+
+}
+
+.dettitle {
+
+    text-decoration: underline;
+
+}
+
+* {
+
+    margin: 0;
+    font-family: 'Raleway-Black',sans-serif;
+
+}
+
+p {
+
+    color: rgba(0,0,0,0.6);
+
+}
+
+p b {
+
+    color: rgba(0,0,0,0.7);
+
+}
+
+#s { display: flex; height: 100%; }
+
+.success {
+
+    font-size: 100%;
+    width: 100%;
+    margin-top: 100%;
+
+}
+
+@media screen and (min-width: 1000px) {
+
+    .form {
+
+        padding: 20px 20px;
+        background-color: rgb(183, 14, 14);
+        height: 80%;
+        width: 60%;
+        margin: auto;
+        margin-top: 2.5%;
+        bottom: 5%;
+        margin-bottom: 2.5%;
+
+    }
+
+    form {
+
+        text-align: left;
+        padding-left: 10%;
+
+    }
+
+    input {
+        background-color: #e78282;
+        color: rgba(45, 45, 45, 0.5);
+    }
+
+    input[type='color'] {
+
+        margin: 0;
+        border: none;
+        padding-top: 25px;
+        padding-bottom: 25px;
+        border-right: rgba(0,0,0,0.5) solid;
+
+    }
+
+
+    input[type='color']::-webkit-color-swatch {
+
+        border: none;
+
+    }
+
+    input[type='color']::-moz-color-swatch {
+        border:none;
+    }
+
+    input[type='text'],[type='url'] {
+
+        padding: 10px 10px 10px 10px;
+        border: none;
+        width: 80%;
+        font-family: 'Raleway-Black',sans-serif;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 120%;
+
+    }
+
+    select {
+
+        width: 76%;
+        border: none;
+        background: no-repeat right #e78282;
+        padding: 10px 30px 10px 30px;
+        font-family: 'Raleway-Black', sans-serif;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 110%;
+
+    }
+
+    textarea {
+
+        width: 80%;
+        border: none;
+        resize:none;
+        height: 200px;
+        padding: 10px 10px;
+        font-family: 'Raleway-Black', sans-serif;
+        color: rgba(0, 0, 0, 0.5);
+        background-color: #e78282;
+        transition: ease-in-out 200ms;
+
+    }
+
+    input::placeholder {
+
+        font-family: 'Raleway-Black',sans-serif;
+        padding: 25px 30px 25px 30px;
+        color: rgba(0, 0, 0, 0.5);
+        text-align: left;
+        font-size: 110%;
+
+    }
+
+    body {
+
+        background: url("../img/pattern_christmas.png") no-repeat fixed center;
+        font-family: 'Roboto', sans-serif;
+
+    }
+
+    .send {
+
+        width: 40%;
+        padding: 20px 20px;
+        background-color: rgba(255,255,255,0.8);
+        border:none;
+        cursor: pointer;
+        bottom: 20%;
+        background: #0F2027;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #0e3106, #337920, #0e3106);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #0e3106, #337920, #0e3106); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        color: white;
+        font-size: 120%;
+        font-family: 'Raleway-Black', sans-serif;
+        transition: ease-in-out 500ms;
+        font-weight: bold;
+        text-transform: uppercase;
+
+
+    }
+
+    .send:hover {
+
+        background: #0F2027;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #0e3106, #0e3106, #0e3106);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #0e3106, #0e3106, #0e3106); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        color: #919191;
+        transition: ease-in-out 500ms;
+
+    }
+
+    h3 {
+
+        font-family: 'Raleway-Black', sans-serif;
+        color: rgba(0,0,0,0.7);
+        font-size: 400%;
+        text-transform: uppercase;
+        text-align: center;
+        margin-top: 7%;
+
+    }
+
+    .dv {
+
+        font-size: 200%;
+        margin-left: unset;
+        text-align: left;
+
+    }
+
+    .form a button {
+
+        margin-top: 10%;
+        width: 40%;
+        padding: 20px 20px;
+        background-color: rgba(54, 54, 54, 0.8);
+        margin-left: 30%;
+        border:none;
+        cursor: pointer;
+        bottom: 20%;
+        background: #0F2027;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #0e3106, #337920, #0e3106);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #0e3106, #337920, #0e3106); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        color: #1def4e;
+        font-size: 120%;
+        font-family: 'Raleway-Black', sans-serif;
+        transition: ease-in-out 500ms;
+        font-weight: bold;
+        text-transform: uppercase;
+
+    }
+
+    .form a button:hover {
+
+        background: #0F2027;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #0e3106, #0e3106, #0e3106);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #0e3106, #0e3106, #0e3106); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        color: rgba(255, 255, 255, 0.7);
+        transition: ease-in-out 500ms;
+
+    }
+
+}
+
+@media screen and (max-width: 1000px) {
+
+    h3 {
+
+        font-family: 'Raleway-Black', sans-serif;
+        color: rgba(0,0,0,0.8);
+        padding: 5% 5%;
+        text-align: center;
+        font-size: 500%;
+        text-transform: uppercase;
+
+    }
+
+    input {
+        background-color: #e78282;
+    }
+
+    textarea {
+        background-color: #e78282;
+    }
+
+    .form {
+
+        background-color: rgb(183, 14, 14);
+        height: 80%;
+        width: 90%;
+        margin-left: 5%;
+        margin-top: 5%;
+
+    }
+
+    .form a button {
+
+        text-align: center;
+        width: 60%;
+        padding: 5% 20%;
+        background-color: rgba(255,255,255,0.8);
+        border:none;
+        cursor: pointer;
+        background: #0F2027;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #0e3106, #337920, #0e3106);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #0e3106, #337920, #0e3106); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        color: white;
+        font-size: 350%;
+        font-family: 'Raleway-Black', sans-serif;
+        transition: ease-in-out 500ms;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin-left: 20%;
+        margin-bottom: 10%;
+
+    }
+
+    .form a button:hover {
+
+        background: #0F2027;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #0e3106, #0e3106, #0e3106);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #0e3106, #0e3106, #0e3106); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        color: gray;
+        transition: ease-in-out 500ms;
+
+    }
+
+    .form a {
+
+        text-align: center;
+        color: green;
+
+    }
+
+    body {
+
+        background: url("../img/pattern_christmas.png") no-repeat fixed center;
+
+    }
+
+    form {
+
+        text-align: left;
+        padding-left: 10%;
+
+    }
+
+    input[type='text'],[type='url'] {
+
+        padding: 30px 10px 30px 10px;
+        border: none;
+        width: 80%;
+        font-family: 'Raleway-Black',sans-serif;
+        color: rgba(0,0,0,0.5);
+        font-size: 220%;
+
+    }
+
+    select {
+
+        width: 80%;
+        border: none;
+        background: no-repeat right #e78282;
+        padding: 10px 30px 10px 30px;
+        font-family: 'Raleway-Black', sans-serif;
+        color: rgba(0,0,0,0.5);
+        font-size: 210%;
+
+    }
+
+    textarea {
+
+        width: 80%;
+        border: none;
+        resize:none;
+        height: 200px;
+        font-size: 220%;
+        padding: 10px 10px;
+        font-family: 'Raleway-Black', sans-serif;
+
+    }
+
+    input::placeholder {
+
+        font-family: 'Raleway-Black',sans-serif;
+        padding: 25px 30px 25px 30px;
+        color: rgba(0,0,0,0.5);
+        text-align: left;
+        font-size: 110%;
+
+    }
+
+    .dv {
+
+        font-size: 500%;
+        margin-left: unset;
+        text-align: left;
+
+    }
+
+
+    .send {
+
+        width: 80%;
+        padding: 20px 40px;
+        background-color: rgba(255,255,255,0.8);
+        border:none;
+        cursor: pointer;
+        bottom: 20%;
+        background: #0F2027;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #0e3106, #337920, #0e3106);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #0e3106, #337920, #0e3106); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        color: white;
+        font-size: 220%;
+        font-family: 'Raleway-Black', sans-serif;
+        transition: ease-in-out 500ms;
+        font-weight: bold;
+        text-transform: uppercase;
+        text-align: center;
+
+
+    }
+
+
+}
