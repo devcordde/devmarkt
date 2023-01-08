@@ -7,3 +7,7 @@ services:
         ports:
             - "8080:80"
         env_file: .env
+    watchtower:
+        image: t1il/devcord-devmarkt
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
