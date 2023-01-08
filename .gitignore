@@ -16,3 +16,4 @@ impressum.html
 /vendor/
 /inc/
 .envpriv.dev
+debug.sh
