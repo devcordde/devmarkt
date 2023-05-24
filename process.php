@@ -3,7 +3,7 @@
 use JetBrains\PhpStorm\Pure;
 
 include_once('pdo.php');
-require 'vendor/autoload.php';
+require_once 'vendor/autoload.php';
 include_once('php/checklogin.php');
 include_once('php/token.inc.php');
 include_once('php/login.inc.php');
