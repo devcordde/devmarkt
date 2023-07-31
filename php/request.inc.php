@@ -41,6 +41,7 @@ class DevmarktRequest
 
         $this->checkEmote = getenv("CHECK_EMOTE");
         $this->blockEmote = getenv("BLOCK_EMOTE");
+
     }
 
     function initializeRequest()
@@ -59,7 +60,9 @@ class DevmarktRequest
             $this->request = $qry->fetch();
             $this->applicant_id = $this->request['by_discord_id'];
             $this->applicant = new User($this->applicant_id);
+
         }
+
     }
 
     #[Pure] function testInput($data): string
@@ -81,7 +84,7 @@ class DevmarktRequest
         $messageContent = '<@' . $applicant->getDiscordId() . '>';
 
         if ($applicant->isModerator()) {
-            $messageContent .= "\n" . ($this->pingsEveryone() ? "@everyone" : "");
+                $messageContent .= "\n" . ($this->pingsEveryone() ? "@everyone" : "");
         }
 
         $devmarktEmbed = $this->generateDevmarktEmbed();
@@ -112,6 +115,8 @@ class DevmarktRequest
 
         $this->applicant = new User($this->getApplicantID());
         return $this->applicant;
+
+
     }
 
     function getApplicantID(): ?string
@@ -152,6 +157,7 @@ class DevmarktRequest
             ['url' => $login->getAvatarURL()],
             date('c')
         );
+
     }
 
     function generateEmbed($title, $description, $fields, $footer, $footer_text, $footer_icon_url, $color, $thumbnail, $timestamp): array
@@ -163,6 +169,7 @@ class DevmarktRequest
         }
 
         return array("title" => $title, "description" => $description, "thumbnail" => $thumbnail, "color" => $color, "footer" => $footer_array, "fields" => $fields, "timestamp" => $timestamp);
+
     }
 
     function generateField($name, $value, $inline): array
@@ -173,6 +180,7 @@ class DevmarktRequest
             'value' => $value,
             'inline' => $inline,
         ];
+
     }
 
     function getUserInfo($user): string
@@ -197,17 +205,14 @@ class DevmarktRequest
         $acceptsDMString = $acceptsDMs ? $this->checkEmote : $this->blockEmote;
         $color = ($accepted ? '3bd323' : 'f40909');
 
-        return $this->generateEmbed(
-            $title,
-            null,
-            [
-                $this->generateField('Bearbeitet von', $this->getUserInfo($login), false),
-                $this->generateField('Anfragesteller', $this->getUserInfo($this->getApplicant()), false),
-                $this->generateField('Akzeptiert DMs', $acceptsDMString, false),
-                $this->generateField('Pingt @everyone', $this->pingsEveryone() ? $this->checkEmote : $this->blockEmote, false),
-                $this->generateField('Case', '[**KLICK**](' . getenv('BOT_BASE_URI') . '/case.php?req_id=' . $this->testInput($this->req_id) . ')', true),
-                $this->generateField('Nutzerinformationen', '[**KLICK**](' . getenv('BOT_BASE_URI') . '/user.php?user_id=' . $this->getApplicant()->getDiscordId() . ')', true),
-            ],
+        return $this->generateEmbed($title, null, [
+            $this->generateField('Bearbeitet von', $this->getUserInfo($login), false),
+            $this->generateField('Anfragesteller', $this->getUserInfo($this->getApplicant()), false),
+            $this->generateField('Akzeptiert DMs', $acceptsDMString, false),
+            $this->generateField('Pingt @everyone', $this->pingsEveryone() ? $this->checkEmote : $this->blockEmote, false),
+            $this->generateField('Case', '[**KLICK**](' . getenv('BOT_BASE_URI') . '/case.php?req_id=' . $this->testInput($this->req_id) . ')', true),
+            $this->generateField('Nutzerinformationen', '[**KLICK**](' . getenv('BOT_BASE_URI') . '/user.php?user_id=' . $this->getApplicant()->getDiscordId() . ')', true),
+        ],
             true,
             $this->getUserAndDisc($login),
             $login->getAvatarURL(),
@@ -215,16 +220,15 @@ class DevmarktRequest
             array('url' => $this->getApplicant()->getAvatarURL()),
             date('c')
         );
+
     }
 
     function pingsEveryone(): bool
     {
 
-        if (
-            !$this->valid
+        if (!$this->valid
             || !$this->getApplicant()->isModerator()
-            || !str_contains($this->getOptions(), 'everyone')
-        ) {
+            || !str_contains($this->getOptions(), 'everyone')) {
             return false;
         }
 
@@ -242,6 +246,7 @@ class DevmarktRequest
         }
 
         return $this->request['options'];
+
     }
 
     function generateDevmarktEmbed(): array
@@ -289,6 +294,7 @@ class DevmarktRequest
             return null;
         }
         return $this->request['link'];
+
     }
 
     function getTitle(): ?string
@@ -301,6 +307,7 @@ class DevmarktRequest
         $this->request['title'] = str_replace('"', "", $this->request['title']);
         $this->request['title'] = str_replace("'", "", $this->request['title']);
         return $this->testInput($this->request['title']);
+
     }
 
     function getColor()
@@ -322,6 +329,7 @@ class DevmarktRequest
         $this->request['description'] = str_replace('"', "", $this->request['description']);
         $this->request['description'] = str_replace("'", "", $this->request['description']);
         return $this->testInput($this->request['description']);
+
     }
 
     function getMessageID()
@@ -345,6 +353,7 @@ class DevmarktRequest
         $qry->bindValue(":req_id", $this->req_id);
         $qry->bindValue(":reason", $this->getReason());
         return $qry->execute();
+
     }
 
     function getDate()
@@ -357,15 +366,14 @@ class DevmarktRequest
     #[Pure] function getReason(): ?string
     {
 
-        if (
-            !$this->valid
+        if (!$this->valid
             && !$this->isProcessed()
-            && $this->isAccepted()
-        ) {
+            && $this->isAccepted()) {
             return null;
         }
 
         return $this->request['reason'];
+
     }
 
     #[Pure] function isProcessed(): bool
@@ -378,15 +386,13 @@ class DevmarktRequest
         if ($processed_qry == "unprocessed") {
             return false;
         }
-        return true;
+    return true;
     }
 
     #[Pure] function isAccepted(): bool
     {
-        if (
-            !$this->valid
-            || !($this->isProcessed())
-        ) {
+        if (!$this->valid
+        || !($this->isProcessed())) {
             return false;
         }
 
@@ -426,28 +432,31 @@ class DevmarktRequest
             $acceptsDMs = false;
         }
 
-        if ($create_thread) {
+        if($create_thread) {
 
-            $thread_id = $this->getApplicant()->createRejectThread();
-
-            try {
-                sendMessage($thread_id, null, $dmEmbed, null);
-            } catch (Exception $e) {
-                $this->getApplicant()->thread = null;
                 $thread_id = $this->getApplicant()->createRejectThread();
-                sendMessage($thread_id, null, $dmEmbed, null);
-            }
-            try {
 
-                $login->addMemberToThread($thread_id, $this->getApplicantID());
-                $login->addMemberToThread($thread_id, $login->getDiscordId());
-                sendMessage($thread_id, "<@" . $this->getApplicant()->getDiscordId() . ">", null, false);
-                $devmarktRequestEmbed = $this->generateProcessedEmbed(false, $login, $acceptsDMs);
-            } catch (Exception $e) {
+                try {
+                    sendMessage($thread_id, null, $dmEmbed, null);
+                } catch(Exception $e) {
+                    $this->getApplicant()->thread = null;
+                    $thread_id = $this->getApplicant()->createRejectThread();
+                    sendMessage($thread_id, null, $dmEmbed, null);
+                }
+                try {
 
-                header('Location: ' . $this->caseUrl . "&error=" . urlencode($e->getMessage()));
-                return true;
-            }
+                    $login->addMemberToThread($thread_id, $this->getApplicantID());
+                    $login->addMemberToThread($thread_id, $login->getDiscordId());
+                    sendMessage($thread_id, "<@" . $this->getApplicant()->getDiscordId() .">", null, false);
+                    $devmarktRequestEmbed = $this->generateProcessedEmbed(false, $login, $acceptsDMs);
+
+                } catch(Exception $e) {
+
+                    header('Location: ' . $this->caseUrl . "&error=" . urlencode($e->getMessage()));
+                    return true;
+
+                }
+
         }
 
         $devmarktRequestEmbed = $this->generateProcessedEmbed(false, $login, $acceptsDMs);
@@ -469,6 +478,7 @@ class DevmarktRequest
         }
         $this->status = $this->request['status'];
         return $this->status;
+
     }
 
     function getProcessedDate()
@@ -504,4 +514,5 @@ class DevmarktRequest
         $this->processor_id = $this->request['processed_by'];
         return $this->processor_id;
     }
+
 }
