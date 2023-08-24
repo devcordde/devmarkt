@@ -155,7 +155,7 @@ if ($request->valid) {
                         class="accent">Everyone-Ping:</span> <span class="<?php echo $request->pingsEveryone() ? "warning-ping" : "normal-ping"; ?>"><?php echo $request->pingsEveryone() ? "Ja" : "Nein"; ?></span>
             </div>
             <div class="user-status <?php echo testInput($sta[0]); ?>"><span
-                        class="accent">Status:</span> <?php echo testInput($sta[0]); ?></div>
+                        class="accent">Status:</span><span class="unprocessed"><?php echo testInput($sta[0]); ?></span> </div>
             <div class="user-status" <?php echo testInput($sta[0]); ?>><span class="accent">Nutzer-Status: </span><?php echo $as->isBlocked() ? "blockiert " : "nicht blockiert "; ?>
             <?php if(!$as->isModerator()) { ?><button onclick="window.location.href='user.php?block_user=<?php echo $as->getDiscordId(); ?>&from=<?php echo $request->getRequestId();?>';"
                     class="<?php echo $as->isBlocked() ? "reject" : "accept"; ?>-button offset"><?php echo $as->isBlocked() ? "Freigeben" : "Blockieren"; ?>
