@@ -413,7 +413,7 @@ class DevmarktRequest
         return substr($haystack, 0, $length) === $needle;
     }
 
-    function rejectRequest(User $login, $reason, $create_thread): bool
+    function rejectRequest(User $login, $reason, $create_thread, $silent): bool
     {
 
         $this->request['reason'] = $this->testInput($reason);
@@ -424,18 +424,18 @@ class DevmarktRequest
         $dmEmbed = $this->generateDMEmbed(false, $login);
         $delete = $login->deleteMessage(getenv("GUILD_DEVMARKT_REQUEST_CHANNEL"), $this->getMessageID());
 
-        if (!$delete) {
-            echo 'Alte Nachricht konnte nicht gelöscht werden[ignore]';
-        }
         if (!$this->updateRequest("abgelehnt", $login->getDiscordID(), $dateProcessed, $this->getMessageID())) {
             return false;
         }
-        if (!$at->sendDMMessage(null, $dmEmbed, false, null)) {
-            echo 'Nutzer nimmt keine DM-Nachrichten an. Persönlich kontaktieren! <a href="' . $this->caseUrl . '">Case</a>';
-            $acceptsDMs = false;
-        }
 
-        if($create_thread) {
+        if(!$silent) {
+
+            if (!$at->sendDMMessage(null, $dmEmbed, false, null)) {
+                echo 'Nutzer nimmt keine DM-Nachrichten an. Persönlich kontaktieren! <a href="' . $this->caseUrl . '">Case</a>';
+                $acceptsDMs = false;
+            }
+
+            if($create_thread) {
 
                 $thread_id = $this->getApplicant()->createRejectThread();
 
@@ -460,6 +460,7 @@ class DevmarktRequest
 
                 }
 
+            }
         }
 
         $devmarktRequestEmbed = $this->generateProcessedEmbed(false, $login, $acceptsDMs);

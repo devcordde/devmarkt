@@ -36,8 +36,10 @@ if (isset($_POST['access_token'], $_POST['req_id'], $_POST['action'], $_POST['mo
             $request->acceptRequest($login);
         } else if ($action == "decline") {
             if (isset($_POST['reason'])) {
-                $request->rejectRequest($login, $_POST['reason'], true);
+                $request->rejectRequest($login, $_POST['reason'], true, false);
             }
+        } else if($action == "silent-decline") {
+                $request->rejectRequest($login, "Nutzer nicht mehr auf dem DevCord" ,false, true);
         }
     }
 
@@ -89,9 +91,8 @@ if (isset($_POST['access_token'], $_POST['req_id'], $_POST['action'], $_POST['mo
 
     $at = new User($st['by_discord_id']);
 
-    if(!$at->inBotGuild()) {
-        echo 'Nutzer ist nicht mehr auf dem Discord.';
-        exit();
+    if(!$at->inBotGuild() && $status == "angenommen") {
+        header('Location: case.php?req_id=' . $req_id . "&msg=left");
     }
 
     if ($status == 'angenommen') {
@@ -104,17 +105,19 @@ if (isset($_POST['access_token'], $_POST['req_id'], $_POST['action'], $_POST['mo
                     ]);
 
                     if(json_decode($req->getBody())->premium_tier >= 2 || in_array("PARTNERED", json_decode($req->getBody())->features)) {
-                        $request->rejectRequest($login, $_POST['reason'], true);
+                        $request->rejectRequest($login, $_POST['reason'], true, false);
                         return;
                     }
-                    $request->rejectRequest($login, $_POST['reason'], false);
+                    $request->rejectRequest($login, $_POST['reason'], false, false);
             } else {
-                $request->rejectRequest($login, $_POST['reason'],false);
+                $request->rejectRequest($login, $_POST['reason'],false, false);
             }
         } else {
             include('reason.php');
         }
 
+    } else if($status == 'silent-decline') {
+        $request->rejectRequest($login, "Nutzer nicht mehr auf dem Discord", false, true);
     }
 
 }

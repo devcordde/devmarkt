@@ -152,13 +152,13 @@ if ($request->valid) {
             <div class="user-submitted-date"><span class="accent">Eingesendet am:</span>
                 <strong><?php echo date("d.m.y - H:i:s", $request->getDate()); ?></strong></div>
             <div class="user-everyone-ping"><span
-                        class="accent">Everyone-Ping:</span> <?php echo $request->pingsEveryone() ? "Ja" : "Nein"; ?>
+                        class="accent">Everyone-Ping:</span> <span class="<?php echo $request->pingsEveryone() ? "warning-ping" : "normal-ping"; ?>"><?php echo $request->pingsEveryone() ? "Ja" : "Nein"; ?></span>
             </div>
             <div class="user-status <?php echo testInput($sta[0]); ?>"><span
                         class="accent">Status:</span> <?php echo testInput($sta[0]); ?></div>
             <div class="user-status" <?php echo testInput($sta[0]); ?>><span class="accent">Nutzer-Status: </span><?php echo $as->isBlocked() ? "blockiert " : "nicht blockiert "; ?>
             <?php if(!$as->isModerator()) { ?><button onclick="window.location.href='user.php?block_user=<?php echo $as->getDiscordId(); ?>&from=<?php echo $request->getRequestId();?>';"
-                    class="<?php echo $as->isBlocked() ? "reject" : "accept"; ?>-button"><?php echo $as->isBlocked() ? "Freigeben" : "Blockieren"; ?>
+                    class="<?php echo $as->isBlocked() ? "reject" : "accept"; ?>-button offset"><?php echo $as->isBlocked() ? "Freigeben" : "Blockieren"; ?>
             </button>
                 <?php } ?>
             </div>
@@ -177,7 +177,21 @@ if ($request->valid) {
     }
     ?>
 
-    <?php if (!$request->isProcessed()) { ?>
+    <?php
+
+    if(!$request->isProcessed() && !$as->inBotGuild()) {
+
+        ?>
+
+        <div class="button-container offset">
+            <button onclick="window.location.href='process.php?action=silent-decline&req_id=<?php echo $request->getRequestId(); ?>';"
+                    class="reject-button offset">Ablehnen (ohne Benachrichtigung)
+            </button>
+        </div>
+
+        <?php
+
+    } else if (!$request->isProcessed() && $as->inBotGuild()) { ?>
 
         <div class="button-container">
             <button onclick="window.location.href='process.php?action=accept&req_id=<?php echo $request->getRequestId(); ?>';"
@@ -194,6 +208,9 @@ if ($request->valid) {
         $mod = $request->getProcessor();
 
         ?>
+
+
+
         </div>
         <br>
         <div class="user-info-box dist">
@@ -201,7 +218,7 @@ if ($request->valid) {
                 <img src="<?php echo $mod->getAvatarURL(); ?>" alt="User Avatar">
             </div>
             <div class="user-details">
-                <div class="user-name accent"><?php echo $mod->getUsername(); ?></div>
+                <div class="user-name accent"><?php echo $mod->getUsername(); if($as->isModerator()) { ?> <span class="angenommen">(Moderator)</span> <?php } ?></div>
                 <br>
                 <div class="user-discord-id"><span class="accent">Discord-ID:</span> <?php echo $mod->getDiscordId(); ?>
                 </div>
