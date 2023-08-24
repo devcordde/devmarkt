@@ -108,6 +108,30 @@ class User
         return $this->isBlocked;
     }
 
+    public function switchBlockState(): bool {
+
+        if(!$this->exists) {
+            return false;
+        }
+
+        if($this->isModerator()) {
+            return false;
+        }
+
+        $mysql = new MySQL();
+        $pdo = $mysql->getPDO();
+
+        $stmt = "UPDATE `dc_users` SET `blocked`=" . ($this->isBlocked ? "0" : "1") . " WHERE `discord_id`=:id";
+        $qry = $pdo->prepare($stmt);
+        $qry->bindParam(":id", $this->discordId);
+        $qry->execute();
+
+        $this->isBlocked = !$this->isBlocked;
+
+        return $this->isBlocked;
+
+    }
+
     public function getLastAcceptedEntry()
     {
 

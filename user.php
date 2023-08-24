@@ -10,6 +10,26 @@ if (check()) {
     $token = new UserTokenHandler($_SESSION['token']);
     $login = new User($token->getDiscordID());
 
+    if(isset($_GET['block_user'])) {
+
+        if($login->isModerator()) {
+
+            $blockID = testInput($_GET['block_user']);
+            $blockUser = new User($blockID);
+
+            $blockUser->switchBlockState();
+
+            if(isset($_GET['from'])) {
+
+                header('Location: case.php?req_id=' . $_GET['from']);
+                return;
+
+            }
+
+        }
+
+    }
+
 } else {
     (isset($_GET['user_id'])) ? header('Location: login.php?redirect=' . getenv("BOT_BASE_URI") . '/user.php?user_id=' . $_GET['user_id']) : header('Location: login.php');
 }

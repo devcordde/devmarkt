@@ -143,7 +143,7 @@ if ($request->valid) {
             <img src="<?php echo $as->getAvatarURL(); ?>" alt="User Avatar">
         </div>
         <div class="user-details">
-            <div class="user-name accent"><?php echo $as->getUsername(); ?></div>
+            <div class="user-name accent"><?php echo $as->getUsername(); if($as->isModerator()) { ?> <span class="angenommen">(Moderator)</span> <?php } ?> </div>
             <br>
             <div class="user-discord-id"><span class="accent">Discord-ID:</span> <?php echo $as->getDiscordId(); ?>
             </div>
@@ -156,6 +156,12 @@ if ($request->valid) {
             </div>
             <div class="user-status <?php echo testInput($sta[0]); ?>"><span
                         class="accent">Status:</span> <?php echo testInput($sta[0]); ?></div>
+            <div class="user-status" <?php echo testInput($sta[0]); ?>><span class="accent">Nutzer-Status: </span><?php echo $as->isBlocked() ? "blockiert " : "nicht blockiert "; ?>
+            <?php if(!$as->isModerator()) { ?><button onclick="window.location.href='user.php?block_user=<?php echo $as->getDiscordId(); ?>&from=<?php echo $request->getRequestId();?>';"
+                    class="<?php echo $as->isBlocked() ? "reject" : "accept"; ?>-button"><?php echo $as->isBlocked() ? "Freigeben" : "Blockieren"; ?>
+            </button>
+                <?php } ?>
+            </div>
         </div>
     </div>
     <div class="big-box">
@@ -175,10 +181,10 @@ if ($request->valid) {
 
         <div class="button-container">
             <button onclick="window.location.href='process.php?action=accept&req_id=<?php echo $request->getRequestId(); ?>';"
-                    class="accept-button">Annehmen
+                    class="accept-button offset">Annehmen
             </button>
             <button onclick="window.location.href='process.php?action=decline&req_id=<?php echo $request->getRequestId(); ?>';"
-                    class="reject-button">Ablehnen
+                    class="reject-button offset">Ablehnen
             </button>
         </div>
         </div>

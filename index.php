@@ -9,9 +9,7 @@ $mysql = new MySQL();
 $base_url = getenv("BOT_BASE_URI");
 $discordInvite = getenv('GUILD_INVITE');
 ?><!DOCTYPE HTML>
-
 <html lang="de">
-
 <head>
 
     <title>DevCord - Devmarkt</title>
@@ -69,9 +67,14 @@ $discordInvite = getenv('GUILD_INVITE');
         $unresolvedRequests = $devmarkt->getUnresolvedRequests();
         $uRS = "";
 
+        if(sizeof($unresolvedRequests) > 0) {
+            ?>
+            <h5>Nicht bearbeitete Anfragen:</h5>
+            <?php
+        }
+
         ?>
 
-        <h5>Nicht bearbeitete Anfragen:</h5>
     <?php
 
         foreach($unresolvedRequests as $request) {
@@ -79,6 +82,8 @@ $discordInvite = getenv('GUILD_INVITE');
             $request = new DevmarktRequest($request['req_id']);
             if($request->getApplicant()->inBotGuild()) {
                $uRS .= "<a href=case.php?req_id=" . htmlentities($request->getRequestId()) . ">" . htmlentities($request->getTitle()) . "</a><br> ";
+            } else {
+                $uRS .= "<a style='color: grey;' href=case.php?req_id=" . htmlentities($request->getRequestId()) . ">" . htmlentities($request->getTitle()) . "</a><br> ";
             }
         }
 
@@ -99,7 +104,7 @@ $discordInvite = getenv('GUILD_INVITE');
 
          ?>
 
-         <h4>Der Devmarkt ist zurzeit leider nicht für dich verfügbar. //</h4>
+    <h4>Der Devmarkt ist zurzeit leider nicht für dich verfügbar. Wende dich bei Fragen oder Problemen im Discord an das Administrations-Team oder schreibe uns eine <a href="impressum.html">E-Mail.</a></h4>
 
          <?php
 

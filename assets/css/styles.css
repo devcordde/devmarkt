@@ -80,15 +80,15 @@ body {
     padding: 10px 10px;
 }
 
-.user-status.angenommen {
+.angenommen {
     color: #43b581;
 }
 
-.user-status.abgelehnt {
+.abgelehnt {
     color: #f04747;
 }
 
-.user-status.unprocessed {
+.unprocessed {
     color: #e7effd;
 }
 
@@ -137,12 +137,15 @@ body {
 }
 
 .accept-button, .reject-button {
-    padding: 10px 20px;
     font-size: 16px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     margin: 0 10px;
+}
+
+.accept-button .offset, .reject-button .offset {
+    padding: 10px 20px;
 }
 
 .accept-button {
