@@ -97,7 +97,6 @@ body {
     border-radius: 5px;
     padding: 20px;
     margin-top: 20px;
-    min-width: 1000px;
     width: 70%;
     max-width: 1200px;
     border: 5px solid #0e53dd;
@@ -108,6 +107,7 @@ body {
     font-weight: bold;
     color: #e3eaf7;
     margin-bottom: 10px;
+    overflow-wrap: anywhere;
 }
 
 .box-text {
@@ -116,6 +116,7 @@ body {
     width: 90%;
     margin-left: auto;
     margin-right: auto;
+    overflow-wrap: anywhere;
 }
 
 .divider {
@@ -164,7 +165,6 @@ body {
     padding: 20px;
     margin-top: 20px;
     width: 100%;
-    min-width: 300px;
 }
 
 .input-box .box-title {
@@ -221,4 +221,33 @@ body {
     text-transform: uppercase;
     margin: 10px 10px;
     color: red;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    .user-info-box, .big-box, .input-box {
+        width: 100%;
+        border: none;
+    }
+
+    .box-title {
+        font-size: 20px;
+    }
+
+    .box-text, .reason-input {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .button-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .accept-button, .reject-button, .delete-button, .submit-button {
+        margin: 5px 0;
+    }
 }

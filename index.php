@@ -81,7 +81,7 @@ $discordInvite = getenv('GUILD_INVITE');
 
             $request = new DevmarktRequest($request['req_id']);
             if($request->getApplicant()->inBotGuild()) {
-               $uRS .= "<a href=case.php?req_id=" . htmlentities($request->getRequestId()) . ">" . htmlentities($request->getTitle()) . "</a><br> ";
+               $uRS .= "<a href=case.php?req_id=" . htmlentities($request->getRequestId()) . ">" . htmlentities($request->getApplicant()->getUsername()) . htmlentities($request->getTitle()) . "</a><br> ";
             } else {
                 $uRS .= "<a style='color: grey;' href=case.php?req_id=" . htmlentities($request->getRequestId()) . ">" . htmlentities($request->getTitle()) . "</a><br> ";
             }

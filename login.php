@@ -1,10 +1,13 @@
 <?php
+
+use Wohali\OAuth2\Client\Provider\Discord;
+
 require_once 'pdo.php';
 require_once 'vendor/autoload.php';
 require_once 'php/login.inc.php';
 
 try {
-    $provider = new \Wohali\OAuth2\Client\Provider\Discord([
+    $provider = new Discord([
         'clientId' => getenv("BOT_CLIENT_ID"),
         'clientSecret' => getenv("BOT_CLIENT_SECRET"),
         'redirectUri' => getenv("BOT_REDIRECT_URI"),
