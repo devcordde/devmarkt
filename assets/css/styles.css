@@ -42,8 +42,8 @@ body {
     display: flex;
     padding: 20px;
     color: #e3eaf7;
-    background-color: #36393f;
     width: 50%;
+    border: 5px solid #0e53dd;
 }
 
 .user-reason {
@@ -100,6 +100,7 @@ body {
     min-width: 1000px;
     width: 70%;
     max-width: 1200px;
+    border: 5px solid #0e53dd;
 }
 
 .box-title {

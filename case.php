@@ -121,6 +121,11 @@ function getContrastColor($hexColor)
             color: <?php echo getContrastColor($contrast_color); ?>
         }
 
+        .user-info-box,
+        .big-box {
+            border-color: <?php echo '#' . $accent_color; ?>;
+        }
+
     </style>
 
 </head>
