@@ -25,7 +25,3 @@ services:
             BOT_REDIRECT_URI: http://localhost:8080/login.php?
             BOT_BASE_URI: http://localhost:8080
         env_file: .env.dev
-    watchtower:
-        image: t1il/devcord-devmarkt
-        volumes:
-            - /var/run/docker.sock:/var/run/docker.sock

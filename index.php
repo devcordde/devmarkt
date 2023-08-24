@@ -7,11 +7,8 @@ include_once('php/request.inc.php');
 include_once('php/devmarkt.class.php');
 $mysql = new MySQL();
 $base_url = getenv("BOT_BASE_URI");
-$discordInvite = "https://discord.gg/PZaG3FS";
-
-?>
-
-<!DOCTYPE HTML>
+$discordInvite = getenv('GUILD_INVITE');
+?><!DOCTYPE HTML>
 
 <html lang="de">
 
@@ -69,27 +66,27 @@ $discordInvite = "https://discord.gg/PZaG3FS";
     if($login->isModerator()) {
 
         $devmarkt = new Devmarkt($login);
-
         $unresolvedRequests = $devmarkt->getUnresolvedRequests();
         $uRS = "";
 
         ?>
 
-        <h5>Nicht bearbeitete Anfragen: </h5>
-
+        <h5>Nicht bearbeitete Anfragen:</h5>
     <?php
 
         foreach($unresolvedRequests as $request) {
 
-            $uRS .= "<a href=case.php?req_id=".htmlentities($request['req_id']).">" . htmlentities($request['title']) ."</a><br> ";
-
+            $request = new DevmarktRequest($request['req_id']);
+            if($request->getApplicant()->inBotGuild()) {
+               $uRS .= "<a href=case.php?req_id=" . htmlentities($request->getRequestId()) . ">" . htmlentities($request->getTitle()) . "</a><br> ";
+            }
         }
 
         echo $uRS;
 
     }
 
-    if (!$login->inGuild(getenv("GUILD_ID"))) {
+    if (!$login->inBotGuild()) {
 
          ?>
 

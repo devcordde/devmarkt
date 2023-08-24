@@ -2,12 +2,12 @@ version: "3"
 
 services:
     devmarkt:
-        container_name: devmarkt2
-        build: .
-        ports:
-            - "8080:80"
-        env_file: .env
-    watchtower:
-        image: t1il/devcord-devmarkt
+        container_name: bivieh_devmarkt_dev
+        build:
+            context: .
+            dockerfile: Dockerfile.debug
         volumes:
-            - /var/run/docker.sock:/var/run/docker.sock
+            - ./:/var/www/
+        ports:
+            - 8080:80
+        env_file: .env

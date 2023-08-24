@@ -89,7 +89,7 @@ if (isset($_POST['access_token'], $_POST['req_id'], $_POST['action'], $_POST['mo
 
     $at = new User($st['by_discord_id']);
 
-    if(!$at->inGuild(getenv("GUILD_ID"))) {
+    if(!$at->inBotGuild()) {
         echo 'Nutzer ist nicht mehr auf dem Discord.';
         exit();
     }

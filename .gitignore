@@ -17,3 +17,6 @@ impressum.html
 /inc/
 .envpriv.dev
 debug.sh
+composer.phar
+buildpush.sh
+/archive/

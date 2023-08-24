@@ -1,6 +1,6 @@
 <?php
 include_once('pdo.php');
-require 'inc/vendor/autoload.php';
+require 'vendor/autoload.php';
 include_once('php/checklogin.php');
 include_once('php/token.inc.php');
 include_once('php/login.inc.php');
@@ -14,12 +14,11 @@ if (!check()) {
     header('Location: login.php?redirect=' . getenv("BOT_BASE_URI") . '/case.php?req_id=' . $_GET['req_id']);
 }
 
-
 $token = new UserTokenHandler($_SESSION['token']);
 $login = new User($token->getDiscordID());
 
 $request = new DevmarktRequest($_GET['req_id']);
-if (!$login->inGuild(getenv("GUILD_ID"))) {
+if (!$login->inBotGuild()) {
     header('Location: ' . getenv("GUILD_INVITE"));
 }
 
@@ -27,97 +26,196 @@ if (!$login->isModerator() && ($login->getDiscordId() != $request->getApplicant(
     header('Location: index.php?error=no_permission');
 }
 
-
 function testInput($data)
 {
-    return htmlspecialchars(stripslashes(trim($data)));
+    return htmlspecialchars(trim($data));
+}
+
+if (!$request->valid) {
+
+    header('Location: index.php?error=wrong_req_id');
+
+}
+$as = $request->getApplicant();
+$active = true;
+
+if (!$as->inBotGuild()) {
+    echo '<p><b>Nutzer nicht mehr auf dem Discord!</b></p><br>';
+    $active = false;
+}
+$sta = explode(":", $request->getStatus());
+
+$accent_color = dechex($request->getColor());
+
+
+function getContrastColor($hexColor)
+{
+    // hexColor RGB
+    $R1 = hexdec(substr($hexColor, 1, 2));
+    $G1 = hexdec(substr($hexColor, 3, 2));
+    $B1 = hexdec(substr($hexColor, 5, 2));
+
+    // Black RGB
+    $blackColor = "#000000";
+    $R2BlackColor = hexdec(substr($blackColor, 1, 2));
+    $G2BlackColor = hexdec(substr($blackColor, 3, 2));
+    $B2BlackColor = hexdec(substr($blackColor, 5, 2));
+
+    // Calc contrast ratio
+    $L1 = 0.2126 * pow($R1 / 255, 2.2) +
+        0.7152 * pow($G1 / 255, 2.2) +
+        0.0722 * pow($B1 / 255, 2.2);
+
+    $L2 = 0.2126 * pow($R2BlackColor / 255, 2.2) +
+        0.7152 * pow($G2BlackColor / 255, 2.2) +
+        0.0722 * pow($B2BlackColor / 255, 2.2);
+
+    $contrastRatio = 0;
+    if ($L1 > $L2) {
+        $contrastRatio = (int)(($L1 + 0.05) / ($L2 + 0.05));
+    } else {
+        $contrastRatio = (int)(($L2 + 0.05) / ($L1 + 0.05));
+    }
+
+    // If contrast is more than 5, return black color
+    if ($contrastRatio > 5) {
+        return '#000000';
+    } else {
+        // if not, return white color.
+        return '#FFFFFF';
+    }
 }
 
 ?>
-
 <!DOCTYPE html>
-
-<html lang="de">
-
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/styles.css">
     <title>Case <?php echo testInput($_GET['req_id']); ?></title>
-    <link rel="stylesheet" href="assets/css/style.css">
+
+    <?php
+    $contrast_color = getContrastColor("#" . $accent_color)
+    ?>
+
+    <style>
+        .accent {
+            color: <?php echo '#' . $accent_color; ?>;
+        }
+
+        .divider {
+            background-color: <?php echo '#' . $accent_color; ?>;
+        }
+
+        .user-name {
+            border-color: <?php echo '#' . $accent_color; ?>;
+        }
+
+        .user-info-box,
+        .big-box,
+        .box-title,
+        .box-text,
+        .box-url {
+            background-color: <?php echo $contrast_color; ?>;
+            color: <?php echo getContrastColor($contrast_color); ?>
+        }
+
+    </style>
+
 </head>
 <body>
 
-<div class="form">
+<?php
 
-    <?php
+if ($request->valid) {
 
-    if ($request->valid) {
-        $as = $request->getApplicant();
+    ?>
 
-        $active = true;
-
-        if(!$as->inGuild(getenv("GUILD_ID"))) {
-            echo '<p>Nutzer nicht mehr auf dem Discord!</p>';
-            $active = false;
-        }
-
-        $sta = explode(":", $request->getStatus());
-        ?>
-        <p>Fall-ID: <strong><?php echo $request->getRequestId(); ?></strong></p>
-        <p>Titel: <strong><?php echo $request->getTitle(); ?></strong></p>
-        <br>
-        <p>Beschreibung: <strong><?php echo $request->getDescription(); ?></strong></p>
-        <br>
-        <?php
-
-        if ($request->hasURL()) {
-            ?>
-            <p>URL: <strong><?php echo testInput($request->getURL()); ?></strong></p>
-            <?php
-        }
-        ?>
-        <br>
-        <p>Von:
-            <strong><?php if($active) { echo testInput($as->getUsername() . "#" . $as->getDiscriminator() . ' : ' . $as->getDiscordId()); }else echo "Nutzer nicht mehr auf dem Discord"; ?></strong>
-        </p>
-        <br>
-        <p>Datum: <strong><?php echo date("d.m.y - H:i:s", $request->getDate()); ?></strong></p>
-        <?php
-        if ($request->isProcessed()) {
-            ?>
-            <p>Bearbeitet am: <strong><?php echo date("d.m.y - H:i:s", $request->getProcessedDate()); ?></strong></p>
-            <?php
-        }
-        ?>
-        <br>
-        <p>Pingt @everyone: <strong><?php echo $request->pingsEveryone() ? "Ja" : "Nein"; ?></strong></p>
-        <p>Status: <strong><?php echo testInput($sta[0]); ?></strong></p>
-        <p>Begründung: <strong><?php echo $request->getReason(); ?></strong></p>
-        <?php
-
-        if ($request->isProcessed()) {
-            $processor = $request->getProcessor();
-            ?>
-
-            <p>Bearbeitet von: <strong><?php echo $processor->getUsername() . '#' . $processor->getDiscriminator(); ?></strong></p>
-
-            <a class="resend" href="index.php?requestID=<?php echo $request->getRequestId(); ?>">Erneut einsenden</a>
-
-            <?php
-        } else if(!$request->isProcessed() && $login->isModerator()) {
-
-            ?>
+    <div class="container">
+    <div class="user-info-box">
+        <div class="user-avatar">
+            <img src="<?php echo $as->getAvatarURL(); ?>" alt="User Avatar">
+        </div>
+        <div class="user-details">
+            <div class="user-name accent"><?php echo $as->getUsername(); ?></div>
             <br>
-            <br>
-            <a class="angenommen" href="process.php?action=accept&req_id=<?php echo $request->getRequestId();?>">Annehmen</a>
-            <a class="abgelehnt" href="process.php?action=decline&req_id=<?php echo $request->getRequestId();?>">Ablehnen</a>
-
+            <div class="user-discord-id"><span class="accent">Discord-ID:</span> <?php echo $as->getDiscordId(); ?>
+            </div>
+            <div class="user-request-id"><span class="accent">Request-ID:</span> <?php echo $request->getRequestId(); ?>
+            </div>
+            <div class="user-submitted-date"><span class="accent">Eingesendet am:</span>
+                <strong><?php echo date("d.m.y - H:i:s", $request->getDate()); ?></strong></div>
+            <div class="user-everyone-ping"><span
+                        class="accent">Everyone-Ping:</span> <?php echo $request->pingsEveryone() ? "Ja" : "Nein"; ?>
+            </div>
+            <div class="user-status <?php echo testInput($sta[0]); ?>"><span
+                        class="accent">Status:</span> <?php echo testInput($sta[0]); ?></div>
+        </div>
+    </div>
+    <div class="big-box">
+    <div class="box-title"><?php echo $request->getTitle(); ?></div>
+    <div class="divider accent"></div>
+    <div class="box-text"><?php echo nl2br(wordwrap($request->getDescription(), 200, "<br>", true)); ?></div>
     <?php
-
-        }
+    if ($request->hasURL()) {
+        ?>
+        <div class="divider accent"></div>
+        <div class="box-url"><?php echo testInput($request->getURL()); ?></div>
+        <?php
     }
     ?>
 
-</div>
+    <?php if (!$request->isProcessed()) { ?>
+
+        <div class="button-container">
+            <button onclick="window.location.href='process.php?action=accept&req_id=<?php echo $request->getRequestId(); ?>';"
+                    class="accept-button">Annehmen
+            </button>
+            <button onclick="window.location.href='process.php?action=decline&req_id=<?php echo $request->getRequestId(); ?>';"
+                    class="reject-button">Ablehnen
+            </button>
+        </div>
+        </div>
+
+    <?php } else {
+
+        $mod = $request->getProcessor();
+
+        ?>
+        </div>
+        <br>
+        <div class="user-info-box dist">
+            <div class="user-avatar">
+                <img src="<?php echo $mod->getAvatarURL(); ?>" alt="User Avatar">
+            </div>
+            <div class="user-details">
+                <div class="user-name accent"><?php echo $mod->getUsername(); ?></div>
+                <br>
+                <div class="user-discord-id"><span class="accent">Discord-ID:</span> <?php echo $mod->getDiscordId(); ?>
+                </div>
+                <div class="user-submitted-date"><span class="accent">Bearbeitet am:</span>
+                    <strong><?php echo date("d.m.y - H:i:s", $request->getProcessedDate()); ?></strong></div>
+            </div>
+        </div>
+
+        <?php if (!$request->isAccepted() && $request->isProcessed()) { ?>
+
+            <div class="user-info-box dist">
+                <div class="user-reason"><span class="accent">Begründung:</span> <?php echo $request->getReason(); ?>
+                </div>
+            </div>
+
+        <?php } ?>
+
+        </div>
+
+        <?php
+    } ?>
+
+    </div>
+
+<?php } ?>
 
 </body>
-
 </html>

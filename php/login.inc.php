@@ -396,6 +396,9 @@ class User
         if(!$this->exists) {
             return false;
         }
+        if(!$this->inBotGuild()) {
+            return false;
+        }
 
         if(!$this->hasRole(getenv("GUILD_MOD_ID"),getenv("GUILD_ID"))) {
             return false;
@@ -445,6 +448,27 @@ class User
         return $this->fetchUser()->discriminator;
     }
 
+    public function inBotGuild(): bool {
+
+            $guild_id = getenv("GUILD_ID");
+            $member_id = $this->getDiscordId();
+
+        try {
+
+            $client = new GuzzleHttp\Client();
+
+            $res = $client->request('GET', 'https://discord.com/api/v8/guilds/' . $guild_id . '/members/' . $member_id, [
+                'headers' => ['Authorization' => 'Bot ' . $this->botToken]
+            ]);
+
+            if($res->getStatusCode() != 200) return false;
+
+            return true;
+
+        } catch (Exception) {
+            return false;
+        }
+    }
     public function inGuild($id): bool
     {
         try {
@@ -455,7 +479,7 @@ class User
                 }
             }
         } catch (Exception) {
-            header('Location: login.php');
+          header('Location: login.php');
         }
         return false;
     }

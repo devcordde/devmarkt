@@ -1,0 +1,212 @@
+@font-face {
+    font-family: 'Raleway-Black';
+    src: url('../fonts/Raleway-Black.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/Roboto-Light.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('../fonts/Inter-Medium.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    background-color: #000000;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Inter';
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 20px;
+}
+
+.user-info-box {
+    background-color: #36393f;
+    border-radius: 5px;
+    display: flex;
+    padding: 20px;
+    color: #e3eaf7;
+    background-color: #36393f;
+    width: 50%;
+}
+
+.user-reason {
+    text-align: center;
+}
+
+.dist {
+    margin-top: 20px;
+}
+
+.accent {
+
+    color: #0e53dd;
+    font-weight: bold;
+
+}
+
+.user-avatar img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-right: 20px;
+    align-content: center;
+}
+
+.user-details {
+    flex: 1;
+}
+
+.user-name {
+    font-weight: bold;
+    font-size: 16px;
+    border: 5px solid #0e53dd;
+    padding: 10px 10px;
+}
+
+.user-status.angenommen {
+    color: #43b581;
+}
+
+.user-status.abgelehnt {
+    color: #f04747;
+}
+
+.user-status.unprocessed {
+    color: #e7effd;
+}
+
+.big-box {
+    background-color: #36393f;
+    border-radius: 5px;
+    padding: 20px;
+    margin-top: 20px;
+    min-width: 1000px;
+    width: 70%;
+    max-width: 1200px;
+}
+
+.box-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #e3eaf7;
+    margin-bottom: 10px;
+}
+
+.box-text {
+    font-size: 18px;
+    color: #e3eaf7;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.divider {
+    width: 95%;
+    margin: 20px auto;
+    height: 5px;
+    background-color: #0e53dd;
+}
+
+.box-url {
+    font-size: 18px;
+    color: #e3eaf7;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.accept-button, .reject-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 10px;
+}
+
+.accept-button {
+    background-color: #43b581;
+    color: #e3eaf7;
+}
+
+.reject-button {
+    background-color: #f04747;
+    color: #e3eaf7;
+}
+
+.input-box {
+    background-color: #36393f;
+    border-radius: 5px;
+    padding: 20px;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.input-box .box-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #e3eaf7;
+    margin-bottom: 10px;
+}
+
+.reason-input {
+    width: 90%;
+    padding: 10px;
+    border: 2px solid #0e53dd;
+    border-radius: 5px;
+    background-color: #292b2f;
+    color: #e3eaf7;
+    resize: vertical;
+    margin: auto auto;
+}
+
+.thread-checkbox {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.thread-checkbox input[type="checkbox"] {
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.checkbox-label {
+    color: #e3eaf7;
+    cursor: pointer;
+}
+
+.submit-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #7289da;
+    color: #e3eaf7;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #5b6eae;
+}

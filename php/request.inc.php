@@ -227,8 +227,11 @@ class DevmarktRequest
     {
 
         if (!$this->valid
-            || !$this->getApplicant()->isModerator()
             || !str_contains($this->getOptions(), 'everyone')) {
+            return false;
+        }
+
+        if(!$this->getApplicant()->isModerator()) {
             return false;
         }
 
