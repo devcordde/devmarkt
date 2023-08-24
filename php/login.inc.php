@@ -89,7 +89,7 @@ class User
         $client = new GuzzleHttp\Client();
         try {
             $res = $client->request('GET', 'https://discord.com/api/v8/users/' . $this->discordId, [
-                'headers' => ['Authorization' => 'Bot ' . $this->botToken]
+                'headers' => ['Authorization' => 'Bot ' . $this->botToken],
             ]);
         } catch (GuzzleException) {
             return null;
