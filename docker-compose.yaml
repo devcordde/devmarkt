@@ -1,8 +1,8 @@
 version: "3"
 
 services:
-    devmarkt:
-        container_name: bivieh_devmarkt_dev
+    devmarkt2:
+        container_name: bivieh_devmarkt
         build:
             context: .
             dockerfile: Dockerfile.debug
