@@ -338,3 +338,26 @@ body {
     }
 }
 
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    .user-avatar img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .request-title {
+        font-size: 16px;
+    }
+
+    .request-info {
+        align-items: flex-start;
+    }
+
+    .request-details {
+        padding: 5px;
+        font-size: 14px;
+    }
+}

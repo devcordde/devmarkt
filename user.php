@@ -1,197 +1,214 @@
 <?php
+
 include_once('pdo.php');
 include_once('php/login.inc.php');
 include_once('php/token.inc.php');
 include_once('php/checklogin.php');
 $mysql = new MySQL();
 
-if (check()) {
+if (!check()) {
+    (isset($_GET['user_id'])) ? header('Location: login.php?redirect=' . getenv("BOT_BASE_URI") . '/user.php?user_id=' . $_GET['user_id']) : header('Location: login.php');
+}
+///
+$token = new UserTokenHandler($_SESSION['token']);
+$login = new User($token->getDiscordID());
 
-    $token = new UserTokenHandler($_SESSION['token']);
-    $login = new User($token->getDiscordID());
+if (isset($_GET['block_user'])) {
 
-    if(isset($_GET['block_user'])) {
+    if ($login->isModerator()) {
 
-        if($login->isModerator()) {
+        $blockID = testInput($_GET['block_user']);
+        $blockUser = new User($blockID);
 
-            $blockID = testInput($_GET['block_user']);
-            $blockUser = new User($blockID);
+        $blockUser->switchBlockState();
 
-            $blockUser->switchBlockState();
+        if (isset($_GET['from'])) {
 
-            if(isset($_GET['from'])) {
-
-                header('Location: case.php?req_id=' . $_GET['from']);
-                return;
-
-            }
+            header('Location: case.php?req_id=' . $_GET['from']);
+            return;
 
         }
+
+        header('Location: user.php?user_id=' . $_GET['block_user']);
 
     }
 
-} else {
-    (isset($_GET['user_id'])) ? header('Location: login.php?redirect=' . getenv("BOT_BASE_URI") . '/user.php?user_id=' . $_GET['user_id']) : header('Location: login.php');
 }
+
+if (!isset($_GET['user_id']) || !$login->isModerator()) {
+    header('Location: index.php');
+}
+
+$idUser = new User(($_GET['user_id']));
+
+$accent_color = getAverage($idUser->getAvatarURL());
 
 ?>
 
-    <!DOCTYPE HTML>
+<!DOCTYPE html>
+<html lang="de">
+<head>
 
-    <html lang="de">
+    <title>DevCord - Devmarkt</title>
 
-    <head>
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
+    <link rel="stylesheet" href="assets/css/styles.css">
 
-        <title>DevCord - Devmarkt</title>
+    <meta charset="utf-8"/>
+    <meta name="description"
+          content="Interface des Devmarktes für den DevCord-Discord. Hier kannst du Anfragen in den Devmarkt schicken, die vor Veröffentlichung geprüft werden."/>
+    <meta name="author" content="T1Il"/>
+    <meta name="copyright" content="T1Il"/>
 
-        <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
-        <link rel="stylesheet" href="assets/css/style.css">
+    <meta property="og:title" content="DevCord Devmarkt für Developer und Serverbetreiber"/>
+    <meta property="og:description"
+          content="Interface des Devmarktes für den DevCord-Discord. Hier kannst du Anfragen in den Devmarkt schicken, die vor Veröffentlichung geprüft werden."/>
+    <meta property="og:site_name" content="DevCord Devmarkt"/>
+    <meta property="og:image" content="<?php echo getenv("BOT_BASE_URI"); ?>/assets/img/favicon.png">
 
-        <meta charset="utf-8"/>
-        <meta name="description"
-              content="Interface des Devmarktes für den DevCord-Discord. Hier kannst du Anfragen in den Devmarkt schicken, die vor Veröffentlichung geprüft werden."/>
-        <meta name="author" content="T1Il"/>
-        <meta name="copyright" content="T1Il"/>
+    <?php
+    $contrast_color = getContrastColor("#" . $accent_color)
+    ?>
 
-        <meta property="og:title" content="DevCord Devmarkt für Developer und Serverbetreiber"/>
-        <meta property="og:description"
-              content="Interface des Devmarktes für den DevCord-Discord. Hier kannst du Anfragen in den Devmarkt schicken, die vor Veröffentlichung geprüft werden."/>
-        <meta property="og:site_name" content="DevCord Devmarkt"/>
-        <meta property="og:image" content="<?php echo getenv("BOT_BASE_URI"); ?>/assets/img/favicon.png">
+    <style>
+        .accent {
+            color: <?php echo '#' . $accent_color; ?>;
+        }
 
-    </head>
+        .divider {
+            background-color: <?php echo '#' . $accent_color; ?>;
+        }
 
-    <body>
+        .user-name {
+            border-color: <?php echo '#' . $accent_color; ?>;
+        }
 
-    <div class="form">
+        .user-info-box,
+        .big-box,
+        .box-title,
+        .box-text,
+        .box-url {
+            background-color: <?php echo $contrast_color; ?>;
+            color: <?php echo getContrastColor($contrast_color); ?>
+        }
+
+        .user-info-box,
+        .big-box {
+            border-color: <?php echo '#' . $accent_color; ?>;
+        }
+
+    </style>
+
+</head>
+<body>
+<div class="container">
+    <div class="user-info-box" style="width: 100%;">
+        <div class="user-avatar">
+            <img src="<?php echo $idUser->getAvatarURL(); ?>" alt="User Avatar">
+        </div>
+        <div class="user-details">
+            <div class="user-name accent"><?php echo $idUser->getUsername();
+                if ($idUser->isModerator()) { ?> <span class="angenommen">(Moderator)</span> <?php } ?> </div>
+            <br>
+            <div class="user-discord-id"><span class="accent">Discord-ID:</span> <?php $discordId = $idUser->getDiscordId();
+                echo $discordId; ?>
+            </div>
+            <div class="user-status" <?php echo $idUser->isBlocked() ? "abgelehnt" : "angenommen"; ?>><span
+                        class="accent">Nutzer-Status: </span><?php echo $idUser->isBlocked() ? "blockiert " : "nicht blockiert "; ?>
+                <button onclick="window.location.href='user.php?block_user=<?php echo $discordId; ?>';"
+                        class="<?php echo $idUser->isBlocked() ? "reject" : "accept"; ?>-button offset"><?php echo $idUser->isBlocked() ? "Freigeben" : "Blockieren"; ?>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="user-requests">
 
         <?php
 
-        if ($login->isModerator()) {
+        $pdo = $mysql->getPDO();
+        $stmt = 'SELECT * FROM `anfragen` WHERE `by_discord_id`=:user ORDER BY `id` DESC';
+        $qry = $pdo->prepare($stmt);
+        $qry->bindParam(":user", $discordId, PDO::PARAM_STR);
+        $qry->execute();
 
-            if (isset($_GET['user_id'])) {
+        $st = $qry->fetchAll();
 
-                $pdo = $mysql->getPDO();
+        foreach ($st as $request) {
 
-                $bonk = testInput($_GET['user_id']);
+            ?>
 
-                $stmt = 'SELECT * FROM `anfragen` WHERE `by_discord_id`=:user ORDER BY `id` DESC';
-                $qry = $pdo->prepare($stmt);
-                $qry->bindParam(":user", $bonk, PDO::PARAM_STR);
-                $qry->execute();
+            <div class="request">
+                <div class="request-info">
+                    <div class="request-date">Datum: <?php echo  date("d.m.y - h:i:s",$request['date']); ?></div>
+                    <div class="request-status <?php echo testInput($request['status']); ?>">Status: <?php echo testInput($request['status']); ?></div>
+                </div>
+                <div class="request-title"><?php echo testInput($request['title']); ?>
+                    <button onclick="window.location.href='case.php?req_id=<?php echo $request['req_id']; ?>';"
+                           class="neutral-button offset">Details
+                    </button></div>
+            </div>
 
-                $st = $qry->fetchAll();
+        <?php
 
-                foreach ($st as $s) {
-
-                    $as = new User($s['by_discord_id']);
-
-                    $sta = explode(":", $s['status']);
-
-                        ?>
-
-                        <details>
-
-                            <summary><span class="<?php echo $sta[0]; ?>"><?php echo $sta[0]; ?></span> <span class="dettitle"><?php echo testInput($s['title']) . '</span> | ' . date("d.m.y - h:i:s",$s['date']); ?></summary>
-
-                            <div class="detcontent">
-                            <p>
-                            <p>Fall-ID: <strong><?php echo testInput($s['req_id']); ?></strong></p>
-                            <p>Titel: <strong><?php echo testInput($s['title']); ?></strong></p>
-                            <br>
-                            <p>Beschreibung: <strong><?php echo testInput($s['description']); ?></strong></p>
-                            <br>
-                            <?php
-
-                            if ($s['link'] != '') {
-                                ?>
-
-                                <p>URL: <strong><?php echo testInput($s['link']); ?></strong></p>
-
-                                <?php
-
-                            }
-
-                            ?>
-                            <br>
-                            <p>Von:
-                                <strong><?php echo testInput($as->getUsername() . "#" . $as->getDiscriminator() . ' : ' . $as->getDiscordId()); ?></strong>
-                            </p>
-                            <br>
-                            <p>Datum:
-                                <strong><?php echo date("d.m.y - H:i:s", $s['date']); ?></strong>
-                            </p>
-                            <?php
-
-                            if ($s['processed_by'] != 'unprocessed') {
-
-                                ?>
-
-                                <p>Bearbeitet am:
-                                    <strong><?php echo date("d.m.y - H:i:s", $s['date_processed']); ?></strong>
-                                </p>
-
-                                <?php
-
-                            }
-
-                            ?>
-                            <br>
-                            <p>Status: <strong><?php echo testInput($sta[0]); ?></strong></p>
-                            <p>Begründung: <strong><?php echo testInput($s['reason']); ?></strong></p>
-                            <?php
-
-                            if ($s['processed_by'] != 'unprocessed') {
-
-                                $processor = new User($s['processed_by']);
-                                ?>
-
-                                <p>Bearbeitet von:
-                                    <strong><?php echo $processor->getUsername() . '#' . $processor->getDiscriminator(); ?></strong>
-                                </p>
-
-                            <?php }
-                            ?>
-                            </p>
-
-                            </div>
-                        </details>
-                        <br>
-                        <br>
-                        <br>
-
-                        <?php
-
-                    }
-
-                }
-
-            } else {
-            header('Location: index.php');
         }
 
         ?>
-
-
     </div>
+</div>
+</body>
+</html>
 
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-
-    </body>
-
-    <script
-        src="https://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous"></script>
-
-    </html>
 <?php
 function testInput($data) {
     return htmlspecialchars(stripslashes(trim($data)));
+}
+
+function getAverage($sourceURL){
+
+    $image = imagecreatefrompng($sourceURL);
+    $scaled = imagescale($image, 1, 1, IMG_BICUBIC);
+    $index = imagecolorat($scaled, 0, 0);
+    $rgb = imagecolorsforindex($scaled, $index);
+    $red = round(round(($rgb['red'] / 0x33)) * 0x33);
+    $green = round(round(($rgb['green'] / 0x33)) * 0x33);
+    $blue = round(round(($rgb['blue'] / 0x33)) * 0x33);
+    return sprintf('%02X%02X%02X', $red, $green, $blue);
+}
+
+function getContrastColor($hexColor)
+{
+    // hexColor RGB
+    $R1 = hexdec(substr($hexColor, 1, 2));
+    $G1 = hexdec(substr($hexColor, 3, 2));
+    $B1 = hexdec(substr($hexColor, 5, 2));
+
+    // Black RGB
+    $blackColor = "#000000";
+    $R2BlackColor = hexdec(substr($blackColor, 1, 2));
+    $G2BlackColor = hexdec(substr($blackColor, 3, 2));
+    $B2BlackColor = hexdec(substr($blackColor, 5, 2));
+
+    // Calc contrast ratio
+    $L1 = 0.2126 * pow($R1 / 255, 2.2) +
+        0.7152 * pow($G1 / 255, 2.2) +
+        0.0722 * pow($B1 / 255, 2.2);
+
+    $L2 = 0.2126 * pow($R2BlackColor / 255, 2.2) +
+        0.7152 * pow($G2BlackColor / 255, 2.2) +
+        0.0722 * pow($B2BlackColor / 255, 2.2);
+
+    $contrastRatio = 0;
+    if ($L1 > $L2) {
+        $contrastRatio = (int)(($L1 + 0.05) / ($L2 + 0.05));
+    } else {
+        $contrastRatio = (int)(($L2 + 0.05) / ($L1 + 0.05));
+    }
+
+    // If contrast is more than 5, return black color
+    if ($contrastRatio > 5) {
+        return '#000000';
+    } else {
+        // if not, return white color.
+        return '#FFFFFF';
+    }
 }
