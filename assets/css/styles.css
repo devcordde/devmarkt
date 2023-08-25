@@ -137,7 +137,7 @@ body {
     margin-top: 20px;
 }
 
-.accept-button, .reject-button, .delete-button {
+.accept-button, .reject-button, .delete-button, .neutral-button {
     font-size: 16px;
     border: none;
     border-radius: 5px;
@@ -223,6 +223,92 @@ body {
     color: red;
 }
 
+.user-requests {
+    margin-top: 20px;
+}
+
+.request {
+    background-color: #36393f;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.request-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.request-date, .request-status {
+    font-size: 14px;
+    color: #e3eaf7;
+    margin-bottom: 5px;
+}
+
+.request-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #e3eaf7;
+    flex: 1;
+    margin-left: 10px;
+}
+
+.request-status.angenommen {
+    color: #43b581;
+}
+
+.request-status.abgelehnt {
+    color: #f04747;
+}
+
+.request-status.unprocessed {
+    color: #e7effd;
+}
+
+.request {
+    position: relative;
+}
+
+.expand-button {
+    font-size: 20px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: transform 0.3s ease;
+}
+
+.request-details {
+    display: none;
+    padding: 10px;
+    background-color: #292b2f;
+    color: #e3eaf7;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.expanded .expand-button {
+    transform: rotate(45deg);
+}
+
+.expanded .request-details {
+    display: block;
+}
+
+.request-details p {
+    margin: 0;
+    margin-top: 10px;
+}
+
+.request-details a {
+    color: #0e53dd;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
+}
+
 @media (max-width: 600px) {
     .container {
         padding: 10px;
@@ -251,3 +337,4 @@ body {
         margin: 5px 0;
     }
 }
+

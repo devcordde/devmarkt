@@ -5,7 +5,7 @@ services:
         container_name: bivieh_devmarkt
         build:
             context: .
-            dockerfile: Dockerfile.debug
+            dockerfile: Dockerfile
         volumes:
             - ./:/var/www/
         ports:

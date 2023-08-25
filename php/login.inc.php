@@ -5,7 +5,6 @@ require getenv("APP_PATH") . '/vendor/autoload.php';
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-
 class User
 {
 

@@ -20,3 +20,6 @@ debug.sh
 composer.phar
 buildpush.sh
 /archive/
+html/install-php-extensions
+composer.lock
+info.php
