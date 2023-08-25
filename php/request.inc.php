@@ -185,7 +185,7 @@ class DevmarktRequest
 
     function getUserInfo($user): string
     {
-        return $user->getUsername() . '#' . $user->getDiscriminator() . ' => ' . $user->getDiscordID();
+        return "{$user->getUsername()}" . ($user->getDiscriminator() == "0" ? "" : "#{$user->getDiscriminator()}") . " => {$user->getDiscordID()}";
     }
 
     function getUserAndDisc($user): string
