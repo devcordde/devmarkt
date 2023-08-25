@@ -24,7 +24,6 @@ RUN apt-get update && apt-get install -y \
 	&& docker-php-ext-configure gd --with-freetype --with-jpeg \
 	&& docker-php-ext-install -j$(nproc) gd
 
-COPY opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 COPY docker/000-default.conf /etc/apache2/sites-available/000-default.conf
 RUN a2enmod rewrite
 

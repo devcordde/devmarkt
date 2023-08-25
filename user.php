@@ -30,6 +30,7 @@ if (isset($_GET['block_user'])) {
         }
 
         header('Location: user.php?user_id=' . $_GET['block_user']);
+        return;
 
     }
 
@@ -39,7 +40,7 @@ if (!isset($_GET['user_id']) || !$login->isModerator()) {
     header('Location: index.php');
 }
 
-$idUser = new User(($_GET['user_id']));
+$idUser = new User($_GET['user_id']);
 
 $accent_color = getAverage($idUser->getAvatarURL());
 
