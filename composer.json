@@ -2,10 +2,11 @@
     "name": "tills/bivieh_devmarkt",
     "type": "project",
     "require": {
-        "guzzlehttp/guzzle": "^7.3",
-        "wohali/oauth2-discord-new": "^1.1",
+        "php": "*",
+        "guzzlehttp/guzzle": "*",
+        "wohali/oauth2-discord-new": "*",
       "ext-pdo": "*",
-        "monolog/monolog": "^3.4",
+        "monolog/monolog": "*",
         "ext-gd": "*"
     },
     "authors": [

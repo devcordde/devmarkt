@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-    devmarkt2:
+    devmarkt:
         container_name: bivieh_devmarkt
         build:
             context: .
