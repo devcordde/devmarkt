@@ -4,4 +4,4 @@
 - copy .env.dev.example to .env.dev
 - enter all properties
 - add the bot to your server
-- run `docker-compose -f docker-compose.debug.yaml up`
+- run `docker compose -f compose.debug.yaml up`

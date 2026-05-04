@@ -5,7 +5,7 @@
         "php": "*",
         "guzzlehttp/guzzle": "*",
         "wohali/oauth2-discord-new": "*",
-      "ext-pdo": "*",
+        "ext-pdo": "*",
         "monolog/monolog": "*",
         "ext-gd": "*"
     },

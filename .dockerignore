@@ -1,5 +1,11 @@
-.env
-.env.example
-.env.dev
-.env.dev.example
 .idea/
+.git/
+.github/
+.env*
+Dockerfile*
+info.php
+compose*
+README.md
+.dockerignore
+.gitattributes
+.gitignore
