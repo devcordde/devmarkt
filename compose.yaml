@@ -1,0 +1,11 @@
+services:
+  devmarkt:
+    container_name: bivieh_devmarkt
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+        - ./:/var/www/
+    ports:
+        - "8080:80"
+    env_file: .env
