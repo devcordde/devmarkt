@@ -2,12 +2,11 @@
 
 use JetBrains\PhpStorm\Pure;
 
-include_once('pdo.php');
-require_once 'vendor/autoload.php';
-include_once('php/checklogin.php');
-include_once('php/token.inc.php');
-include_once('php/login.inc.php');
-include_once('php/request.inc.php');
+include_once('../php/pdo.php');
+include_once('../php/checklogin.php');
+include_once('../php/token.inc.php');
+include_once('../php/login.inc.php');
+include_once('../php/request.inc.php');
 $client = new \GuzzleHttp\Client();
 
 if (isset($_POST['access_token'], $_POST['req_id'], $_POST['action'], $_POST['moderator_id'])) {

@@ -1,8 +1,8 @@
 <?php
-include_once 'pdo.php';
-include_once 'php/login.inc.php';
-include_once 'php/checklogin.php';
-include_once 'php/token.inc.php';
+include_once '../php/pdo.php';
+include_once '../php/login.inc.php';
+include_once '../php/checklogin.php';
+include_once '../php/token.inc.php';
 
 if(check()) {
 

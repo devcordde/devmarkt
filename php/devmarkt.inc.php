@@ -1,5 +1,5 @@
 <?php
-include_once('../pdo.php');
+include_once('pdo.php');
 include_once('login.inc.php');
 include_once('token.inc.php');
 include_once('request.inc.php');
