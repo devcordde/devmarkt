@@ -1,5 +1,5 @@
 .env
-.env.dev
+dev.env
 discordguild.php
 f.php
 test.php
@@ -23,3 +23,5 @@ buildpush.sh
 html/install-php-extensions
 composer.lock
 info.php
+*.env
+!example.*.env

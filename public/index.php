@@ -129,7 +129,7 @@ $discordInvite = getenv('GUILD_INVITE');
 
     ?>
 
-    <form id="form" method="POST" action="php/devmarkt.inc.php">
+    <form id="form" method="POST" action="devmarkt.inc.php">
 
         <?php
 
