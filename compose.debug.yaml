@@ -10,7 +10,7 @@ services:
     container_name: bivieh_devmarkt_dev
     build:
       context: .
-      dockerfile: Dockerfile.debug
+      dockerfile: debug.Dockerfile
     ports:
       - "8080:80"
     volumes:
