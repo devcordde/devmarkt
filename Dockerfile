@@ -1,33 +1,39 @@
 FROM php:8-apache
 
+# Install system dependencies
 RUN apt-get update && \
     apt-get install -y \
-        zlib1g-dev
+        zlib1g-dev \
+        libxml2-dev \
+        libssl-dev \
+        libfreetype-dev \
+        libjpeg62-turbo-dev \
+        libpng-dev \
+        unzip \
+        git
 
-RUN apt-get install -y \
-        libxml2-dev
-
+# Install PHP extensions
 RUN /usr/local/bin/docker-php-ext-install mysqli pdo pdo_mysql
-RUN apt-get install libssl-dev -y
-
-ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS="0"
 
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
-
 RUN chmod +x /usr/local/bin/install-php-extensions && \
     install-php-extensions gd
 
-RUN apt-get update && apt-get install -y \
-		libfreetype-dev \
-		libjpeg62-turbo-dev \
-		libpng-dev \
-	&& docker-php-ext-configure gd --with-freetype --with-jpeg \
-	&& docker-php-ext-install -j$(nproc) gd
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
+# Apache configuration
 COPY docker/000-default.conf /etc/apache2/sites-available/000-default.conf
 RUN a2enmod rewrite
 
+# Application setup
 COPY . /var/www/
+WORKDIR /var/www
+
+# Install dependencies, then delete Composer files
+RUN composer install --no-interaction --no-dev --optimize-autoloader
+RUN rm composer.*
+
 RUN chown -R www-data:www-data /var/www
 
 COPY docker/start-apache /usr/local/bin

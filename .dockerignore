@@ -2,10 +2,12 @@
 .git/
 .github/
 .env*
+vendor/
 Dockerfile*
 info.php
-compose*
+compose.*
 README.md
 .dockerignore
 .gitattributes
 .gitignore
+debug.sh
