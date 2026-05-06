@@ -1,4 +1,15 @@
 #!/usr/bin/env bash
+
+# Generate impressum from template if it doesn't exist
+if [ ! -f /var/www/public/impressum.html ]; then
+    echo "Generating /var/www/public/impressum.html from template..."
+    cp /var/www/docker/templates/impressum.html.template /var/www/public/impressum.html
+    sed -i "s/IMPRESSUM_NAME/${IMPRESSUM_NAME:-}/g" /var/www/public/impressum.html
+    sed -i "s/IMPRESSUM_STREET/${IMPRESSUM_STREET:-}/g" /var/www/public/impressum.html
+    sed -i "s/IMPRESSUM_CITY/${IMPRESSUM_CITY:-}/g" /var/www/public/impressum.html
+    sed -i "s/IMPRESSUM_EMAIL/${IMPRESSUM_EMAIL:-}/g" /var/www/public/impressum.html
+fi
+
 sed -i "s/Listen 80/Listen ${PORT:-80}/g" /etc/apache2/ports.conf
 sed -i "s/:80/:${PORT:-80}/g" /etc/apache2/sites-enabled/*
 apache2-foreground

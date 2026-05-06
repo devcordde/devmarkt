@@ -6,6 +6,7 @@ services:
       dockerfile: Dockerfile
     volumes:
         - ./:/var/www/
+        # - ./impressum.html:/var/www/public/impressum.html
     ports:
         - "8080:80"
     env_file: .env
