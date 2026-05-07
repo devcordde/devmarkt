@@ -2,7 +2,7 @@
     "name": "tills/bivieh_devmarkt",
     "type": "project",
     "require": {
-        "php": "*",
+        "php": "8.5.5",
         "guzzlehttp/guzzle": "*",
         "wohali/oauth2-discord-new": "*",
         "ext-pdo": "*",
