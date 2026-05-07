@@ -1,1 +1,1 @@
-docker-compose -f compose.debug.yaml up
+docker-compose -f compose.debug.yaml up --build

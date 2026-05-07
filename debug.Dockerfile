@@ -30,8 +30,8 @@ RUN a2enmod rewrite
 COPY . /var/www/
 WORKDIR /var/www
 
-# Install dependencies, then delete Composer files
-RUN composer install --no-interaction --no-dev --optimize-autoloader
+# Install dependencies (including dev for debug mode), then delete Composer files
+RUN composer install --no-interaction
 RUN rm composer.*
 
 RUN chown -R www-data:www-data /var/www
