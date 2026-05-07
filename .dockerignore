@@ -12,3 +12,4 @@ README.md
 .gitignore
 debug.sh
 public/impressum.html
+public/datenschutz.html

@@ -25,3 +25,5 @@ composer.lock
 info.php
 *.env
 !example.*.env
+public/impressum.html
+public/datenschutz.html

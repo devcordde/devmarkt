@@ -2,9 +2,11 @@
 
 <html>
     <head>
-        <title>Impressum - DevCord</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Datenschutzerkl&auml;rung - DevCord</title>
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png" />
-        <link rel="stylesheet" href="assets/css/style.css" />
+        <link rel="stylesheet" href="assets/css/styles.css" />
     </head>
 
     <body>
@@ -74,10 +76,16 @@
             <h3>Hinweis zur verantwortlichen Stelle</h3>
             <p>Die verantwortliche Stelle f&uuml;r die Datenverarbeitung auf dieser Website ist:</p>
             <p>
-                Max Schlosser<br />
-                Gro&szlig;br&ouml;sern 4<br />
-                02627 Radibor<br />
+                ${IMPRESSUM_NAME}<br />
+                ${IMPRESSUM_STREET}<br />
+                ${IMPRESSUM_CITY}<br />
             </p>
         </div>
+        <footer class="site-footer">
+            <div class="footer-nav">
+                <a href="/">&larr; Zur&uuml;ck zum Devmarkt</a>
+            </div>
+            <a href="impressum.html">Impressum</a> &middot; <a href="datenschutz.html">Datenschutz</a>
+        </footer>
     </body>
 </html>

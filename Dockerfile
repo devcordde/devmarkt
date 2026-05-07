@@ -10,7 +10,8 @@ RUN apt-get update && \
         libjpeg62-turbo-dev \
         libpng-dev \
         unzip \
-        git
+        git \
+        gettext-base
 
 # Install PHP extensions
 RUN /usr/local/bin/docker-php-ext-install mysqli pdo pdo_mysql

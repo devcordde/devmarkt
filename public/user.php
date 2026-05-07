@@ -116,7 +116,7 @@ $accent_color = getAverage($idUser->getAvatarURL());
             </div>
             <div class="user-status" <?php echo $idUser->isBlocked() ? "abgelehnt" : "angenommen"; ?>><span
                         class="accent">Nutzer-Status: </span><?php echo $idUser->isBlocked() ? "blockiert " : "nicht blockiert "; ?>
-                <button onclick="window.location.href='user.php?block_user=<?php echo $discordId; ?>';"
+                <button type="button" onclick="window.location.href='user.php?block_user=<?php echo $discordId; ?>';"
                         class="<?php echo $idUser->isBlocked() ? "reject" : "accept"; ?>-button offset"><?php echo $idUser->isBlocked() ? "Freigeben" : "Blockieren"; ?>
                 </button>
             </div>
@@ -144,7 +144,7 @@ $accent_color = getAverage($idUser->getAvatarURL());
                     <div class="request-status <?php echo testInput($request['status']); ?>">Status: <?php echo testInput($request['status']); ?></div>
                 </div>
                 <div class="request-title"><?php echo testInput($request['title']); ?>
-                    <button onclick="window.location.href='case.php?req_id=<?php echo $request['req_id']; ?>';"
+                    <button type="button" onclick="window.location.href='case.php?req_id=<?php echo $request['req_id']; ?>';"
                            class="neutral-button offset">Details
                     </button></div>
             </div>

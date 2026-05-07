@@ -15,7 +15,8 @@ $discordInvite = getenv('GUILD_INVITE');
     <title>DevCord - Devmarkt</title>
 
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <meta charset="utf-8"/>
     <meta name="description" content="Interface des Devmarktes für den DevCord-Discord. Hier kannst du Anfragen in den Devmarkt schicken, die vor Veröffentlichung geprüft werden."/>
@@ -28,19 +29,26 @@ $discordInvite = getenv('GUILD_INVITE');
     <meta property="og:image" content="<?php echo $base_url; ?>/assets/img/favicon.png">
 
     <script src="assets/js/index.js"></script>
+    <script src="assets/js/markdown-editor.js"></script>
 
 </head>
 
 <body>
 
-<div class="form">
-
 <?php if(!check()) { ?>
 
+<div class="login-page">
+    <div class="login-card">
         <h3>Logge<br> dich<br> ein</h3>
         <a href="login.php"><button>Login</button></a>
+    </div>
+</div>
 
-<?php } else {
+<?php } else { ?>
+
+<div class="form">
+
+<?php
 
     $token = new UserTokenHandler($_SESSION['token']);
     $login = new User($token->getDiscordID());
@@ -144,11 +152,11 @@ $discordInvite = getenv('GUILD_INVITE');
         <p><strong>bitte achte bei deiner Anfrage auf eine angemessene sprachliche Richtigkeit. <br>Als Hilfe kannst du das <a href="https://languagetool.org/">LanguageTool</a> nutzen.</strong></p>
 		<br>
         <label>
-            <input type="text" min="10" name="titel" minlength="5" maxlength="50" placeholder="Titel deiner Einreichung" value="<?php echo $request_template["Title"]; ?>">
+            <input type="text" name="titel" minlength="5" maxlength="50" placeholder="Titel deiner Einreichung" value="<?php echo $request_template["Title"]; ?>" required>
         </label>
         <br>
         <br>
-        <div style="display:flex">
+        <div class="color-type-row">
 
             <label for="color"><?php
             $color = random_color();
@@ -197,10 +205,11 @@ $discordInvite = getenv('GUILD_INVITE');
 <?php }
 } ?>
 
-<footer>
-    <p><a href="https://github.com/T1Il/devcord_devmarkt/">T1Il</a> 20<?php echo date('y'); ?> (v1.5)</p>
-<br>
-<a href="impressum.html">Impressum</a>/<a href="datenschutz.html">Datenschutzerklärung</a>
+<footer class="site-footer">
+    <div class="footer-nav">
+        <a href="impressum.html">Impressum</a> &middot; <a href="datenschutz.html">Datenschutz</a>
+    </div>
+    <p><a href="https://github.com/T1Il/devcord_devmarkt/">T1Il</a> 20<?php echo date('y'); ?></p>
 </footer>
 
 

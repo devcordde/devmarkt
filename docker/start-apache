@@ -1,13 +1,18 @@
 #!/usr/bin/env bash
 
-# Generate impressum from template if it doesn't exist
+# Generate impressum and datenschutz from templates if they don't exist
 if [ ! -f /var/www/public/impressum.html ]; then
     echo "Generating /var/www/public/impressum.html from template..."
-    cp /var/www/docker/templates/impressum.html.template /var/www/public/impressum.html
-    sed -i "s/IMPRESSUM_NAME/${IMPRESSUM_NAME:-}/g" /var/www/public/impressum.html
-    sed -i "s/IMPRESSUM_STREET/${IMPRESSUM_STREET:-}/g" /var/www/public/impressum.html
-    sed -i "s/IMPRESSUM_CITY/${IMPRESSUM_CITY:-}/g" /var/www/public/impressum.html
-    sed -i "s/IMPRESSUM_EMAIL/${IMPRESSUM_EMAIL:-}/g" /var/www/public/impressum.html
+    envsubst '${IMPRESSUM_NAME} ${IMPRESSUM_STREET} ${IMPRESSUM_CITY} ${IMPRESSUM_EMAIL}' \
+        < /var/www/docker/templates/impressum.html.template \
+        > /var/www/public/impressum.html
+fi
+
+if [ ! -f /var/www/public/datenschutz.html ]; then
+    echo "Generating /var/www/public/datenschutz.html from template..."
+    envsubst '${IMPRESSUM_NAME} ${IMPRESSUM_STREET} ${IMPRESSUM_CITY}' \
+        < /var/www/docker/templates/datenschutz.html.template \
+        > /var/www/public/datenschutz.html
 fi
 
 sed -i "s/Listen 80/Listen ${PORT:-80}/g" /etc/apache2/ports.conf
