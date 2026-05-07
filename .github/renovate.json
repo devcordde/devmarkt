@@ -22,7 +22,8 @@
       "automerge": true,
       "automergeType": "branch",
       "ignoreTests": false,
-      "minimumReleaseAge": "14 days"
+      "minimumReleaseAge": "14 days",
+      "rangeStrategy": "bump"
     },
     {
       "description": "Open PRs for major PHP (composer) updates - require manual review",
@@ -33,9 +34,15 @@
       "minimumReleaseAge": "14 days"
     },
     {
-      "description": "Auto-merge non-major Dockerfile base image updates",
+      "description": "Ignore patch-level Docker updates so images stay pinned to major.minor only",
       "matchManagers": ["dockerfile"],
-      "matchUpdateTypes": ["minor", "patch", "digest", "pin"],
+      "matchUpdateTypes": ["patch"],
+      "enabled": false
+    },
+    {
+      "description": "Auto-merge minor Dockerfile base image updates without opening a PR",
+      "matchManagers": ["dockerfile"],
+      "matchUpdateTypes": ["minor", "pin"],
       "automerge": true,
       "automergeType": "branch",
       "ignoreTests": false,
@@ -54,16 +61,13 @@
       "matchManagers": ["dockerfile"],
       "matchPackageNames": ["php", "php-fpm", "php-cli", "php-apache"],
       "groupName": "php docker images"
+    },
+    {
+      "description": "Do not pin Docker image digests - keep tags as major.minor only",
+      "matchManagers": ["dockerfile"],
+      "pinDigests": false
     }
   ],
-  "composer": {
-    "enabled": true,
-    "rangeStrategy": "bump"
-  },
-  "dockerfile": {
-    "enabled": true,
-    "pinDigests": true
-  },
   "vulnerabilityAlerts": {
     "enabled": true,
     "labels": ["security"],
