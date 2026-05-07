@@ -40,8 +40,7 @@
       "automerge": true,
       "automergeType": "branch",
       "ignoreTests": false,
-      "minimumReleaseAge": "14 days",
-      "rangeStrategy": "bump"
+      "minimumReleaseAge": "14 days"
     },
     {
       "description": "Open PRs for major PHP (composer) updates - require manual review",
