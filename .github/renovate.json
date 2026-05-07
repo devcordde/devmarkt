@@ -34,6 +34,11 @@
       "commitMessageTopic": "PHP"
     },
     {
+      "description": "For composer, only update the lockfile - composer.json uses wildcard constraints that have nothing to bump",
+      "matchManagers": ["composer"],
+      "rangeStrategy": "update-lockfile"
+    },
+    {
       "description": "Auto-merge non-major PHP (composer) updates without opening a PR",
       "matchManagers": ["composer"],
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
