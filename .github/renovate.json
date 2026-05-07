@@ -14,7 +14,25 @@
   "configMigration": true,
   "dependencyDashboard": true,
   "rangeStrategy": "bump",
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Keep PHP version in .github/workflows/php-verify.yml in sync with the Dockerfile",
+      "managerFilePatterns": ["/^\\.github/workflows/php-verify\\.ya?ml$/"],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)\\s+php-version:\\s*\\['(?<currentValue>[^']+)'\\]"
+      ],
+      "versioningTemplate": "docker"
+    }
+  ],
   "packageRules": [
+    {
+      "description": "Group PHP version bumps across Dockerfile and the verify workflow into one update",
+      "matchPackageNames": ["php"],
+      "matchDatasources": ["docker"],
+      "groupName": "php version",
+      "commitMessageTopic": "PHP"
+    },
     {
       "description": "Auto-merge non-major PHP (composer) updates without opening a PR",
       "matchManagers": ["composer"],
@@ -57,10 +75,10 @@
       "minimumReleaseAge": "14 days"
     },
     {
-      "description": "Group PHP runtime image updates with PHP language updates in Dockerfile",
+      "description": "Group PHP runtime image updates across both Dockerfile and debug.Dockerfile",
       "matchManagers": ["dockerfile"],
-      "matchPackageNames": ["php", "php-fpm", "php-cli", "php-apache"],
-      "groupName": "php docker images"
+      "matchPackageNames": ["php"],
+      "groupName": "php version"
     },
     {
       "description": "Do not pin Docker image digests - keep tags as major.minor only",
