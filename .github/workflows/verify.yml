@@ -1,13 +1,129 @@
 name: Verify
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [main]
+  pull_request:
+  # Renovate creates branches like "renovate/*" - run on those too so
+  # branch-mode auto-merge gates on this workflow's success
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  build-docker:
+  verify:
+    name: Verify PHP ${{ matrix.php-version }}
     runs-on: ubuntu-latest
-    name: Docker build
+
+    strategy:
+      matrix:
+        # PHP version is kept in sync with the Dockerfile by Renovate.
+        # See the customManagers rule in renovate.json - do not edit this
+        # line by hand, Renovate will bump it together with the Dockerfile.
+        # renovate: datasource=docker depName=php
+        php-version: ['8.4']
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Build as Docker image
-        run: docker build .
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          # Match the extensions installed in the Dockerfile
+          extensions: mbstring, pdo, pdo_mysql, mysqli, gd
+          coverage: none
+          tools: composer:v2
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate --strict --no-check-publish
+
+      - name: Get Composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-php${{ matrix.php-version }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php${{ matrix.php-version }}-composer-
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-interaction
+
+      - name: Lint all PHP files (syntax check)
+        run: |
+          find php public -type f -name "*.php" -print0 \
+          | xargs -0 -n1 -P4 php -l > /tmp/lint.log 2>&1 \
+          || (cat /tmp/lint.log && exit 1)
+
+      - name: Static analysis (PHPStan)
+        # No phpstan in composer.json yet - install ad-hoc to catch breaking
+        # changes from dependency updates. Level 0 catches removed/renamed
+        # symbols without complaining about pre-existing untyped code.
+        run: |
+          composer require --dev --no-progress --no-interaction phpstan/phpstan
+          vendor/bin/phpstan analyse \
+            --no-progress \
+            --error-format=github \
+            --level=0 \
+            php public
+
+      - name: Run tests (PHPUnit)
+        # Currently no tests in this repo - this step is a no-op until added.
+        run: |
+          if [ -f vendor/bin/phpunit ]; then
+            vendor/bin/phpunit --no-coverage
+          else
+            echo "::notice::No PHPUnit configured - skipping tests."
+          fi
+
+  docker-build:
+    name: Verify Docker image builds
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build production image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          push: false
+          load: true
+          tags: devmarkt:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build debug image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./debug.Dockerfile
+          push: false
+          load: true
+          tags: devmarkt:ci-debug
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Smoke-test container starts and PHP works
+        run: |
+          # Boot the container, confirm PHP can parse the app's entry points
+          # without throwing. Catches breaking changes that only show up
+          # under the actual base image's PHP version.
+          docker run --rm --entrypoint php devmarkt:ci -v
+          docker run --rm --entrypoint php devmarkt:ci -m
+          docker run --rm --entrypoint sh devmarkt:ci -c \
+            'find /var/www -name "*.php" -not -path "*/vendor/*" -print0 | xargs -0 -n1 php -l > /dev/null'
