@@ -1,0 +1,87 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboard",
+    ":semanticCommits"
+  ],
+  "timezone": "Europe/Berlin",
+  "schedule": ["* 0-6 * * 1"],
+  "prConcurrentLimit": 5,
+  "prHourlyLimit": 2,
+  "minimumReleaseAge": "14 days",
+  "internalChecksFilter": "strict",
+  "configMigration": true,
+  "dependencyDashboard": true,
+  "rangeStrategy": "bump",
+  "packageRules": [
+    {
+      "description": "Auto-merge non-major PHP (composer) updates without opening a PR",
+      "matchManagers": ["composer"],
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true,
+      "automergeType": "branch",
+      "ignoreTests": false,
+      "minimumReleaseAge": "14 days",
+      "matchConfidence": ["high", "very high"]
+    },
+    {
+      "description": "Open PRs for major PHP (composer) updates - require manual review",
+      "matchManagers": ["composer"],
+      "matchUpdateTypes": ["major"],
+      "automerge": false,
+      "labels": ["dependencies", "php", "major-update"],
+      "minimumReleaseAge": "14 days"
+    },
+    {
+      "description": "Auto-merge non-major Dockerfile base image updates",
+      "matchManagers": ["dockerfile"],
+      "matchUpdateTypes": ["minor", "patch", "digest", "pin"],
+      "automerge": true,
+      "automergeType": "branch",
+      "ignoreTests": false,
+      "minimumReleaseAge": "14 days",
+      "matchConfidence": ["high", "very high"]
+    },
+    {
+      "description": "Open PRs for major Dockerfile base image updates",
+      "matchManagers": ["dockerfile"],
+      "matchUpdateTypes": ["major"],
+      "automerge": false,
+      "labels": ["dependencies", "docker", "major-update"],
+      "minimumReleaseAge": "14 days"
+    },
+    {
+      "description": "Group PHP runtime image updates with PHP language updates in Dockerfile",
+      "matchManagers": ["dockerfile"],
+      "matchPackageNames": ["php", "php-fpm", "php-cli", "php-apache"],
+      "groupName": "php docker images"
+    },
+    {
+      "description": "Require Merge Confidence to be at least 'high' for any auto-merge",
+      "matchUpdateTypes": ["minor", "patch", "digest"],
+      "matchCurrentVersion": "!/^0/",
+      "matchConfidence": ["low", "neutral"],
+      "automerge": false
+    }
+  ],
+  "composer": {
+    "enabled": true,
+    "rangeStrategy": "bump"
+  },
+  "dockerfile": {
+    "enabled": true,
+    "pinDigests": true
+  },
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "labels": ["security"],
+    "minimumReleaseAge": null,
+    "automerge": true
+  },
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true,
+    "schedule": ["* 0-6 * * 1"]
+  }
+}
