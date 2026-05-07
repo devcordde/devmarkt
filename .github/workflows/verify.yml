@@ -73,8 +73,16 @@ jobs:
         # No phpstan in composer.json yet - install ad-hoc to catch breaking
         # changes from dependency updates. Level 0 catches removed/renamed
         # symbols without complaining about pre-existing untyped code.
+        #
+        # jetbrains/phpstorm-attributes provides stub classes for PhpStorm's
+        # IDE hint attributes (#[Pure], #[Immutable], etc.) that the codebase
+        # uses. PHP ignores unknown attributes at runtime, but PHPStan flags
+        # them as undefined classes - this package makes them resolvable.
         run: |
-          composer require --dev --no-progress --no-interaction phpstan/phpstan
+          composer require --dev --no-progress --no-interaction --no-update \
+            phpstan/phpstan jetbrains/phpstorm-attributes
+          composer update --no-progress --no-interaction \
+            phpstan/phpstan jetbrains/phpstorm-attributes
           vendor/bin/phpstan analyse \
             --no-progress \
             --error-format=github \
