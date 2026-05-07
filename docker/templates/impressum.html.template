@@ -2,7 +2,7 @@
 
 <html>
     <head>
-        <title>Datenschutzerkl&auml;rung - DevCord</title>
+        <title>Impressum - DevCord</title>
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png" />
         <link rel="stylesheet" href="assets/css/style.css" />
     </head>
@@ -13,9 +13,9 @@
 
             <h2>Angaben gem&auml;&szlig; &sect; 5 TMG</h2>
             <p>
-                Max Schlosser<br />
-                Gro&szlig;br&ouml;sern 4<br />
-                02627 Radibor
+                IMPRESSUM_NAME<br />
+                IMPRESSUM_STREET<br />
+                IMPRESSUM_CITY
             </p>
 
             <p>
@@ -24,7 +24,7 @@
             </p>
 
             <h2>Kontakt</h2>
-            <p>E-Mail: kontakt@max-schlosser.de</p>
+            <p>E-Mail: IMPRESSUM_EMAIL</p>
 
             <p>
                 Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer

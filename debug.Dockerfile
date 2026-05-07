@@ -39,5 +39,6 @@ RUN chown -R www-data:www-data /var/www
 COPY docker/start-apache /usr/local/bin
 
 ENV APP_PATH=/var/www
+COPY docker/000-default.conf /etc/apache2/sites-available/000-default.conf
 
 CMD ["start-apache"]

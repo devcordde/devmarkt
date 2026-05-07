@@ -1,10 +1,9 @@
 <?php
 require getenv("APP_PATH") . '/vendor/autoload.php';
-include_once('pdo.php');
-set_error_handler("var_dump");
-include_once('php/login.inc.php');
-include_once('php/token.inc.php');
-include_once('php/checklogin.php');
+include_once('../php/pdo.php');
+include_once('../php/login.inc.php');
+include_once('../php/token.inc.php');
+include_once('../php/checklogin.php');
 $mysql = new MySQL();
 $client = new \GuzzleHttp\Client();
 

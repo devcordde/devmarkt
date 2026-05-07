@@ -1,10 +1,9 @@
 <?php
-include_once('pdo.php');
-require 'vendor/autoload.php';
-include_once('php/checklogin.php');
-include_once('php/token.inc.php');
-include_once('php/login.inc.php');
-include_once('php/request.inc.php');
+include_once('../php/pdo.php');
+include_once('../php/checklogin.php');
+include_once('../php/token.inc.php');
+include_once('../php/login.inc.php');
+include_once('../php/request.inc.php');
 
 if (!isset($_GET['req_id'])) {
     header('Location: index.php?error=nothing_set');

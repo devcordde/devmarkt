@@ -2,9 +2,9 @@
 
 use Wohali\OAuth2\Client\Provider\Discord;
 
-require_once 'pdo.php';
-require_once 'vendor/autoload.php';
-require_once 'php/login.inc.php';
+require_once '../php/pdo.php';
+require_once getenv("APP_PATH") . '/vendor/autoload.php';
+require_once '../php/login.inc.php';
 
 try {
     $provider = new Discord([

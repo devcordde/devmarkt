@@ -1,10 +1,10 @@
 <?php
-include_once('pdo.php');
-include_once('php/login.inc.php');
-include_once('php/token.inc.php');
-include_once('php/checklogin.php');
-include_once('php/request.inc.php');
-include_once('php/devmarkt.class.php');
+include_once('../php/pdo.php');
+include_once('../php/login.inc.php');
+include_once('../php/token.inc.php');
+include_once('../php/checklogin.php');
+include_once('../php/request.inc.php');
+include_once('../php/devmarkt.class.php');
 $mysql = new MySQL();
 $base_url = getenv("BOT_BASE_URI");
 $discordInvite = getenv('GUILD_INVITE');
@@ -129,7 +129,7 @@ $discordInvite = getenv('GUILD_INVITE');
 
     ?>
 
-    <form id="form" method="POST" action="php/devmarkt.inc.php">
+    <form id="form" method="POST" action="devmarkt.inc.php">
 
         <?php
 

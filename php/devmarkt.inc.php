@@ -1,5 +1,5 @@
 <?php
-include_once('../pdo.php');
+include_once('pdo.php');
 include_once('login.inc.php');
 include_once('token.inc.php');
 include_once('request.inc.php');
@@ -21,12 +21,12 @@ $devmarktRequestChannel = getenv('GUILD_DEVMARKT_REQUEST_CHANNEL');
 $devmarktChannel = getenv('GUILD_DEVMARKT_CHANNEL');
 
 if ($login->isBlocked()) {
-    header('Location: index.php');
+    header('Location: ' . $base_url . '/index.php');
 }
 
 if ($login->isOnCoolDown()
     && !($login->isModerator())) {
-    header('Location: index.php');
+    header('Location: ' . $base_url . '/index.php');
 }
 
 if (!(isset($_POST['titel'], $_POST['type'], $_POST['beschreibung'], $_POST['color']))) {
