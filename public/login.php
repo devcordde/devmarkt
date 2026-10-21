@@ -69,6 +69,7 @@ try {
     exit(1);
 
 } catch(Exception $e) {
+    error_log('Login error: ' . $e->getMessage());
     header('Location: login.php');
     exit;
 }

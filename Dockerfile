@@ -1,4 +1,4 @@
-FROM php:8.4-apache
+FROM php:8.4.12-apache
 
 # Install system dependencies
 RUN apt-get update && \
