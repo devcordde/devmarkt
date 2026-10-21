@@ -26,7 +26,7 @@ jobs:
         # See the customManagers rule in renovate.json - do not edit this
         # line by hand, Renovate will bump it together with the Dockerfile.
         # renovate: datasource=docker depName=php
-        php-version: ['8.4']
+        php-version: ['8.5']
 
     steps:
       - name: Checkout
