@@ -17,8 +17,8 @@
   "customManagers": [
     {
       "customType": "regex",
-      "description": "Keep PHP version in .github/workflows/php-verify.yml in sync with the Dockerfile",
-      "managerFilePatterns": ["/^\\.github/workflows/php-verify\\.ya?ml$/"],
+      "description": "Keep PHP version in .github/workflows/verify.yml in sync with the Dockerfile",
+      "managerFilePatterns": ["/^\\.github/workflows/verify\\.ya?ml$/"],
       "matchStrings": [
         "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)\\s+php-version:\\s*\\['(?<currentValue>[^']+)'\\]"
       ],
