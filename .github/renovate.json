@@ -12,7 +12,9 @@
   "minimumReleaseAge": "14 days",
   "internalChecksFilter": "strict",
   "configMigration": true,
-  "dependencyDashboard": true,
+  "dependencyDashboard": {
+    "enabled": true
+  },
   "rangeStrategy": "bump",
   "customManagers": [
     {
